@@ -1,6 +1,16 @@
-import IconSearch from '../../Icon/IconSearch';
+import IconSearch from "../../Icon/IconSearch";
 
-export default function SearchBar({ searchInput, setSearchInput, setPage }) {
+interface SearchBarProps {
+  searchInput: string;
+  setSearchInput: (value: string) => void;
+  setPage: (value: number) => void;
+}
+
+export default function SearchBar({
+  searchInput,
+  setSearchInput,
+  setPage,
+}: SearchBarProps) {
   return (
     <div className="border flex justify-between items-center border-beige-500 py-3 px-5 rounded-lg w-53.75 md:w-40.25 lg:w-[320px] overflow-hidden">
       <input

@@ -1,6 +1,17 @@
-import SearchBar from "../TransactionHeader/SearchBar";
+import SearchBar from "./SearchBar";
 import SortFilter from "./SortFilter";
 import CategoryFilter from "./CategoryFilter";
+import type { FilterCategory, SortOption } from "../../../types";
+
+interface TransactionHeaderProps {
+  searchInput: string;
+  setSearchInput: (value: string) => void;
+  sort: SortOption;
+  onSort: (value: SortOption) => void;
+  category: FilterCategory;
+  onCategory: (value: FilterCategory) => void;
+  setPage: (value: number) => void;
+}
 
 export default function TransactionHeader({
   searchInput,
@@ -10,7 +21,7 @@ export default function TransactionHeader({
   category,
   onCategory,
   setPage,
-}) {
+}: TransactionHeaderProps) {
   return (
     <section className="flex justify-between">
       <SearchBar

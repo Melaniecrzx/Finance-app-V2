@@ -1,19 +1,25 @@
-import { useState } from 'react';
-import iconCaretDown from '../../../assets/images/icon-caret-down.svg';
-import IconSort from '../../../assets/images/icon-sort-mobile.svg';
+import { useState } from "react";
+import iconCaretDown from "../../../assets/images/icon-caret-down.svg";
+import IconSort from "../../../assets/images/icon-sort-mobile.svg";
+import type { SortOption } from "../../../types";
 
-export default function SortFilter({ value, onChange }) {
-  const options = [
-    { id: 1, value: 'latest', label: 'Latest' },
-    { id: 2, value: 'oldest', label: 'Oldest' },
-    { id: 3, value: 'a-z', label: 'A to Z' },
-    { id: 4, value: 'z-a', label: 'Z to A' },
-    { id: 5, value: 'highest', label: 'Highest' },
-    { id: 6, value: 'lowest', label: 'Lowest' },
+interface SortFilterProps {
+  value: SortOption;
+  onChange: (value: SortOption) => void;
+}
+
+export default function SortFilter({ value, onChange }: SortFilterProps) {
+  const options: { id: number; value: SortOption; label: string }[] = [
+    { id: 1, value: "latest", label: "Latest" },
+    { id: 2, value: "oldest", label: "Oldest" },
+    { id: 3, value: "a-z", label: "A to Z" },
+    { id: 4, value: "z-a", label: "Z to A" },
+    { id: 5, value: "highest", label: "Highest" },
+    { id: 6, value: "lowest", label: "Lowest" },
   ];
   const selected = options.find((o) => o.value === value);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <div className="flex gap-2 items-center relative">

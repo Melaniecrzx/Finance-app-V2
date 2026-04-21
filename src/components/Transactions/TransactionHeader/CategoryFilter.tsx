@@ -1,16 +1,25 @@
-import { useState } from 'react';
-import iconCaretDown from '../../../assets/images/icon-caret-down.svg';
-import iconFilter from '../../../assets/images/icon-filter-mobile.svg';
+import { useState } from "react";
+import iconCaretDown from "../../../assets/images/icon-caret-down.svg";
+import iconFilter from "../../../assets/images/icon-filter-mobile.svg";
+import type { FilterCategory } from "../../../types";
 
-export default function CategoryFilter({ value, onChange }) {
-  const category = [
-    { id: 1, value: 'all', label: 'All Transactions' },
-    { id: 2, value: 'entertainement', label: 'Entertainment' },
-    { id: 3, value: 'bills', label: 'Bills' },
-    { id: 4, value: 'groceries', label: 'Groceries' },
-    { id: 5, value: 'dining', label: 'Dining Out' },
-    { id: 6, value: 'transportation', label: 'Transportation' },
-    { id: 7, value: 'personalCare', label: 'Personal Care' },
+interface CategoryFilterProps {
+  value: FilterCategory;
+  onChange: (value: FilterCategory) => void;
+}
+
+export default function CategoryFilter({
+  value,
+  onChange,
+}: CategoryFilterProps) {
+  const category: { id: number; value: FilterCategory; label: string }[] = [
+    { id: 1, value: "all", label: "All Transactions" },
+    { id: 2, value: "entertainment", label: "Entertainment" },
+    { id: 3, value: "bills", label: "Bills" },
+    { id: 4, value: "groceries", label: "Groceries" },
+    { id: 5, value: "dining", label: "Dining Out" },
+    { id: 6, value: "transportation", label: "Transportation" },
+    { id: 7, value: "personalCare", label: "Personal Care" },
   ];
 
   const selected = category.find((c) => c.value === value);

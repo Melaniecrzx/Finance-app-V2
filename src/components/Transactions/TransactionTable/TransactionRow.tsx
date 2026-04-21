@@ -1,4 +1,8 @@
-export default function TransactionRow({ values }) {
+import type { Transaction } from "../../../types";
+interface TransactionRowProps {
+  values: Transaction;
+}
+export default function TransactionRow({ values }: TransactionRowProps) {
   return (
     <tr className="border-b border-grey-100">
       <td className="text-grey-900 font4-bold text-left py-3 flex items-center gap-4">
@@ -18,14 +22,14 @@ export default function TransactionRow({ values }) {
         {values.category}
       </td>
       <td className="text-grey-500 font5-regular text-left hidden md:table-cell">
-        {new Date(`${values.date}`).toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
+        {new Date(`${values.date}`).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
         })}
       </td>
       <td
-        className={`font4-bold text-right ${values.amount < 0 ? 'text-grey-900' : 'text-green'}`}
+        className={`font4-bold text-right ${values.amount < 0 ? "text-grey-900" : "text-green"}`}
       >
         <div className="flex flex-col gap-2">
           <span>
@@ -34,10 +38,10 @@ export default function TransactionRow({ values }) {
               : `+$${values.amount.toFixed(2)}`}
           </span>
           <span className="text-grey-500 font5-regular md:hidden">
-            {new Date(`${values.date}`).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
+            {new Date(`${values.date}`).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
             })}
           </span>
         </div>

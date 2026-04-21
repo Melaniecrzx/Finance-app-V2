@@ -1,6 +1,13 @@
-import TransactionRow from './TransactionRow';
+import type { Transaction } from "../../../types";
+import TransactionRow from "./TransactionRow";
 
-export default function TransactionTable({ transactions }) {
+interface TransactionTableProps {
+  transactions: Transaction[];
+}
+
+export default function TransactionTable({
+  transactions,
+}: TransactionTableProps) {
   return (
     <table className="w-full table-fixed">
       <thead className="border-b border-grey-100">
