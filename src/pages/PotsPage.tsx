@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import PotsCard from '../components/Pots/PotsCard';
-import Button from '../components/ui/Button';
-import AddNewPot from '../components/Pots/AddNewPot';
-import { usePots } from '../context/PotsContext';
+import { useState } from "react";
+import PotsCard from "../components/Pots/PotsCard";
+import Button from "../components/ui/Button";
+import AddNewPot from "../components/Pots/AddNewPot";
+import { usePots } from "../context/PotsContext";
 
 export default function PotsPage() {
   const [addNewPotOpen, setAddNewPotOpen] = useState(false);

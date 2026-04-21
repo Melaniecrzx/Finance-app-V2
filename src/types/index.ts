@@ -58,6 +58,13 @@ export type BudgetCategory =
   | "Dining Out"
   | "Personal Care";
 
+export interface BudgetStats {
+  spentBudget: number;
+  spentBudgetPercentage: number;
+  remainingBudget: number | string;
+  latestSpending: Transaction[];
+}
+
 export interface Budget {
   id: number;
   category: BudgetCategory;

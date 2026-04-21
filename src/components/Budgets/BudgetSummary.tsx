@@ -1,6 +1,11 @@
-import { Pie, PieChart, Cell, Tooltip } from 'recharts';
+import { Pie, PieChart, Cell, Tooltip } from "recharts";
+import { Budget } from "../../types";
 
-export default function BudgetSummary({ budgets }) {
+interface BudgetSummaryProps {
+  budgets: Budget[];
+}
+
+export default function BudgetSummary({ budgets }: BudgetSummaryProps) {
   const spentBudgetTotal = budgets.reduce((acc, b) => acc + b.spentBudget, 0);
   const maximumBudgetTotal = budgets.reduce((acc, b) => acc + b.maximum, 0);
 

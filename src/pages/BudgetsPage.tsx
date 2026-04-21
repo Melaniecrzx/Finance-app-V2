@@ -1,13 +1,14 @@
-import BudgetSummary from '../components/Budgets/BudgetSummary';
-import BudgetCard from '../components/Budgets/BudgetCard';
-import Button from '../components/ui/Button';
-import { mockBudgets, mockTransactions } from '../api/api';
-import { useState } from 'react';
-import AddNewBudgetModal from '../components/Budgets/AddNewBudgetModal';
+import BudgetSummary from "../components/Budgets/BudgetSummary";
+import BudgetCard from "../components/Budgets/BudgetCard";
+import Button from "../components/ui/Button";
+import { mockBudgets, mockTransactions } from "../api/api";
+import { useState } from "react";
+import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal";
+import type { Budget, BudgetStats } from "../types";
 
-const dateFictive = '2024-08-01';
+const dateFictive: string = "2024-08-01";
 
-const calculateBudgetStats = (budget) => {
+const calculateBudgetStats = (budget: Budget): BudgetStats => {
   const transactionsBudget = mockTransactions.filter(
     (t) => t.category.toLowerCase() === budget.category.toLowerCase(),
   );
@@ -23,7 +24,7 @@ const calculateBudgetStats = (budget) => {
       ? (budget.maximum - spentBudget).toFixed(2)
       : 0;
   const latestSpending = transactionsBudget.sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
   return {
@@ -35,21 +36,21 @@ const calculateBudgetStats = (budget) => {
 };
 
 export default function BudgetsPage() {
-  const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
+  const [addNewBudgetOpen, setAddNewBudgetOpen] = useState<boolean>(false);
 
-  const [budgets, setBudgets] = useState(mockBudgets);
+  const [budgets, setBudgets] = useState<Budget[]>(mockBudgets);
 
-  const handleAdd = (newBudget) => {
+  const handleAdd = (newBudget: Budget) => {
     setBudgets([...budgets, newBudget]);
   };
 
-  const handleEdit = (updatedBudget) => {
+  const handleEdit = (updatedBudget: Budget) => {
     setBudgets(
       budgets.map((b) => (b.id === updatedBudget.id ? updatedBudget : b)),
     );
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     setBudgets(budgets.filter((b) => b.id !== id));
   };
 
