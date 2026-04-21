@@ -1,11 +1,10 @@
-import SearchBar from '../TransactionHeader/SearchBar';
-import SortFilter from './SortFilter';
-import CategoryFilter from './CategoryFilter';
+import SearchBar from "../TransactionHeader/SearchBar";
+import SortFilter from "./SortFilter";
+import CategoryFilter from "./CategoryFilter";
 
 export default function TransactionHeader({
   searchInput,
   setSearchInput,
-  handleSearch,
   sort,
   onSort,
   category,
@@ -17,7 +16,6 @@ export default function TransactionHeader({
       <SearchBar
         searchInput={searchInput}
         setSearchInput={setSearchInput}
-        handleSearch={handleSearch}
         setPage={setPage}
       />
       <div className="flex gap-6 items-center">

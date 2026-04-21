@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./layout/Main";
 
 const OverviewPage = lazy(() => import("./pages/OverviewPage"));
-const TransactionPage = lazy(() => import("./pages/TransactionPage"));
+const TransactionPage = lazy(() => import("./pages/TransactionPage.tsx"));
 const PortsPage = lazy(() => import("./pages/PotsPage"));
 const BudgetsPage = lazy(() => import("./pages/BudgetsPage"));
 const BillsPage = lazy(() => import("./pages/BillsPage"));
