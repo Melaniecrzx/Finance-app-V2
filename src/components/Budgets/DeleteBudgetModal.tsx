@@ -1,12 +1,20 @@
-import Modal from '../ui/Modal';
-import Button from '../ui/Button';
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import type { Budget } from "../../types";
+
+interface DeleteBudgetModalProps {
+  deleteBudgetOpen: boolean;
+  setDeleteBudgetOpen: (value: boolean) => void;
+  budget: Budget;
+  onDelete: (value: number) => void;
+}
 
 export default function DeleteBudgetModal({
   deleteBudgetOpen,
   setDeleteBudgetOpen,
   budget,
   onDelete,
-}) {
+}: DeleteBudgetModalProps) {
   return (
     <Modal
       isOpen={deleteBudgetOpen}
