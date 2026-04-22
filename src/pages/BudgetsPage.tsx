@@ -4,7 +4,7 @@ import Button from "../components/ui/Button";
 import { mockBudgets, mockTransactions } from "../api/api";
 import { useState } from "react";
 import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal";
-import type { Budget, BudgetStats } from "../types";
+import type { Budget, BudgetStats, BudgetWithStats } from "../types";
 
 const dateFictive: string = "2024-08-01";
 
@@ -54,7 +54,7 @@ export default function BudgetsPage() {
     setBudgets(budgets.filter((b) => b.id !== id));
   };
 
-  const budgetsWithStats = budgets.map((b) => ({
+  const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
     ...b,
     ...calculateBudgetStats(b),
   }));

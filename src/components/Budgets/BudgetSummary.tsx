@@ -1,8 +1,8 @@
 import { Pie, PieChart, Cell, Tooltip } from "recharts";
-import { Budget } from "../../types";
+import type { BudgetWithStats } from "../../types";
 
 interface BudgetSummaryProps {
-  budgets: Budget[];
+  budgets: BudgetWithStats[];
 }
 
 export default function BudgetSummary({ budgets }: BudgetSummaryProps) {

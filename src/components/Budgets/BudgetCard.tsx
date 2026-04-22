@@ -1,14 +1,33 @@
-import IconEllipsis from '../Icon/IconEllipsis';
-import IconChevronRight from '../Icon/IconChevronRight';
-import MenuDropdown from '../ui/MenuDropdown';
-import { mockTransactions } from '../../api/api';
-import { useState } from 'react';
-import EditBudgetModal from './EditBudgetModal';
-import DeleteBudgetModal from './DeleteBudgetModal';
+import IconEllipsis from "../Icon/IconEllipsis";
+import IconChevronRight from "../Icon/IconChevronRight";
+import MenuDropdown from "../ui/MenuDropdown";
+import { useState } from "react";
+import EditBudgetModal from "./EditBudgetModal";
+import DeleteBudgetModal from "./DeleteBudgetModal";
+import type { Budget, BudgetStats } from "../../types";
 
-export default function BudgetCard({ budget, stats, onEdit, onDelete }) {
-  const [editBudgetOpen, setEditBudgetOpen] = useState(false);
-  const [deleteBudgetOpen, setDeleteBudgetOpen] = useState(false);
+interface BudgetCardProps {
+  budget: Budget;
+  stats: BudgetStats;
+  onEdit: (value: Budget) => void;
+  onDelete: (value: number) => void;
+}
+
+interface DropdownLink {
+  id: number;
+  onClick: () => void;
+  label: string;
+  className: string;
+}
+
+export default function BudgetCard({
+  budget,
+  stats,
+  onEdit,
+  onDelete,
+}: BudgetCardProps) {
+  const [editBudgetOpen, setEditBudgetOpen] = useState<boolean>(false);
+  const [deleteBudgetOpen, setDeleteBudgetOpen] = useState<boolean>(false);
 
   const {
     spentBudget,
@@ -17,18 +36,18 @@ export default function BudgetCard({ budget, stats, onEdit, onDelete }) {
     latestSpending,
   } = stats;
 
-  const links = [
+  const links: DropdownLink[] = [
     {
       id: 1,
       onClick: () => setEditBudgetOpen(true),
-      label: 'Edit Budget',
-      className: 'text-grey-900',
+      label: "Edit Budget",
+      className: "text-grey-900",
     },
     {
       id: 2,
       onClick: () => setDeleteBudgetOpen(true),
-      label: 'Delete Budget',
-      className: 'text-red',
+      label: "Delete Budget",
+      className: "text-red",
     },
   ];
 
@@ -106,12 +125,12 @@ export default function BudgetCard({ budget, stats, onEdit, onDelete }) {
                   -${Math.abs(l.amount).toFixed(2)}
                 </span>
                 <span className="font5-regular text-grey-500">
-                  {new Date(l.date).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
+                  {new Date(l.date).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
                   })}
-                </span>{' '}
+                </span>{" "}
               </div>
             </div>
           ))}
