@@ -68,7 +68,7 @@ export interface BudgetStats {
 export interface Budget {
   id: number;
   category: BudgetCategory;
-  maximum: number;
+  maximum: number | string;
   theme: string;
 }
 
