@@ -1,37 +1,43 @@
-import { useState } from 'react';
-import Modal from '../ui/Modal';
-import Button from '../ui/Button';
-import IconDown from '../../assets/images/icon-caret-down.svg';
+import { useState } from "react";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import IconDown from "../../assets/images/icon-caret-down.svg";
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from '@headlessui/react';
-import { mockBudgets } from '../../api/api';
+} from "@headlessui/react";
+import { mockBudgets } from "../../api/api";
+import type { Theme, Budget, BudgetCategory } from "../../types";
 
-const categories = mockBudgets.map((b) => b.category);
-const themes = [
-  { id: 1, name: 'Green', color: '#277C78' },
-  { id: 2, name: 'Yellow', color: '#F2CDAC' },
-  { id: 3, name: 'Cyan', color: '#82C9D7' },
-  { id: 4, name: 'Navy', color: '#626070' },
-  { id: 5, name: 'Red', color: '#C94736' },
-  { id: 6, name: 'Purple', color: '#826CB0' },
+const categories: BudgetCategory[] = mockBudgets.map((b) => b.category);
+const themes: Theme[] = [
+  { id: 1, name: "Green", color: "#277C78" },
+  { id: 2, name: "Yellow", color: "#F2CDAC" },
+  { id: 3, name: "Cyan", color: "#82C9D7" },
+  { id: 4, name: "Navy", color: "#626070" },
+  { id: 5, name: "Red", color: "#C94736" },
+  { id: 6, name: "Purple", color: "#826CB0" },
 ];
+interface AddNewBudgetModalProps {
+  addNewBudgetOpen: boolean;
+  setAddNewBudgetOpen: (value: boolean) => void;
+  onAdd: (value: Budget) => void;
+}
 
 export default function AddNewBudgetModal({
   addNewBudgetOpen,
   setAddNewBudgetOpen,
   onAdd,
-}) {
+}: AddNewBudgetModalProps) {
   const [form, setForm] = useState({
-    maximum: '',
+    maximum: "",
   });
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newBuget = {
       id: Date.now(),
@@ -40,7 +46,7 @@ export default function AddNewBudgetModal({
       theme: selectedTheme.color,
     };
     onAdd(newBuget);
-    setForm({ maximum: '' });
+    setForm({ maximum: "" });
     setSelectedTheme(themes[0]);
     setSelectedCategory(categories[0]);
     setAddNewBudgetOpen(false);
@@ -108,7 +114,7 @@ export default function AddNewBudgetModal({
                 <div
                   className="rounded-full h-4 w-4"
                   style={{ backgroundColor: selectedTheme.color }}
-                ></div>{' '}
+                ></div>{" "}
                 {selectedTheme.name}
               </div>
               <img src={IconDown} alt="icon down" />
@@ -123,7 +129,7 @@ export default function AddNewBudgetModal({
                   <div
                     className="rounded-full h-4 w-4"
                     style={{ backgroundColor: theme.color }}
-                  ></div>{' '}
+                  ></div>{" "}
                   {theme.name}
                 </ListboxOption>
               ))}
