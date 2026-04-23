@@ -24,7 +24,7 @@ export default function EditBudgetModal({
   budget,
   onEdit,
 }: EditBudgetModalProps) {
-  const [form, setForm] = useState<{ maximum: number | string }>({
+  const [form, setForm] = useState<{ maximum: number }>({
     maximum: budget.maximum,
   });
   const themes: Theme[] = [
@@ -54,7 +54,7 @@ export default function EditBudgetModal({
       theme: selectedTheme.color,
     };
     onEdit(editBudget);
-    setForm({ maximum: "" });
+    setForm({ maximum: 0 });
     setSelectedCategory(categories[0]);
     setSelectedTheme(themes[0]);
     setEditBudgetOpen(false);
@@ -109,7 +109,7 @@ export default function EditBudgetModal({
                   id="maximum"
                   value={form.maximum}
                   onChange={(e) =>
-                    setForm({ ...form, maximum: e.target.value })
+                    setForm({ ...form, maximum: Number(e.target.value) })
                   }
                   className="outline-none"
                 />
