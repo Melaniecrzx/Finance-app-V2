@@ -1,20 +1,22 @@
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import type { Budget } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import { deleteBudget } from "../../features/budget/budgetSlice";
 
 interface DeleteBudgetModalProps {
   deleteBudgetOpen: boolean;
   setDeleteBudgetOpen: (value: boolean) => void;
   budget: Budget;
-  onDelete: (value: number) => void;
 }
 
 export default function DeleteBudgetModal({
   deleteBudgetOpen,
   setDeleteBudgetOpen,
   budget,
-  onDelete,
 }: DeleteBudgetModalProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <Modal
       isOpen={deleteBudgetOpen}
@@ -29,7 +31,7 @@ export default function DeleteBudgetModal({
         <Button
           mode="destroy"
           onClick={() => {
-            onDelete(budget.id);
+            dispatch(deleteBudget(budget.id));
             setDeleteBudgetOpen(false);
           }}
         >

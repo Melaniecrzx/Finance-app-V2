@@ -9,16 +9,9 @@ import type { Budget, BudgetStats, DropdownLink } from "../../types";
 interface BudgetCardProps {
   budget: Budget;
   stats: BudgetStats;
-  onEdit: (value: Budget) => void;
-  onDelete: (value: number) => void;
 }
 
-export default function BudgetCard({
-  budget,
-  stats,
-  onEdit,
-  onDelete,
-}: BudgetCardProps) {
+export default function BudgetCard({ budget, stats }: BudgetCardProps) {
   const [editBudgetOpen, setEditBudgetOpen] = useState<boolean>(false);
   const [deleteBudgetOpen, setDeleteBudgetOpen] = useState<boolean>(false);
 
@@ -133,13 +126,11 @@ export default function BudgetCard({
         editBudgetOpen={editBudgetOpen}
         setEditBudgetOpen={setEditBudgetOpen}
         budget={budget}
-        onEdit={onEdit}
       />
       <DeleteBudgetModal
         deleteBudgetOpen={deleteBudgetOpen}
         setDeleteBudgetOpen={setDeleteBudgetOpen}
         budget={budget}
-        onDelete={onDelete}
       />
     </section>
   );
