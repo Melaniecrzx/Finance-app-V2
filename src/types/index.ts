@@ -77,7 +77,7 @@ export interface BudgetWithStats extends Budget, BudgetStats {}
 export interface Pot {
   id: number;
   name: string;
-  target: number;
+  target: number | string;
   total: number;
   theme: string;
 }
