@@ -41,14 +41,10 @@ const calculateBudgetStats = (budget: Budget): BudgetStats => {
 };
 
 export default function BudgetsPage() {
-  const [addNewBudgetOpen, setAddNewBudgetOpen] = useState<boolean>(false);
+  const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
 
   const budgets = useAppSelector((state) => state.budgets.value);
   const dispatch = useAppDispatch();
-
-  const handleAdd = (newBudget: Budget) => {
-    dispatch(addBudget(newBudget));
-  };
 
   const handleEdit = (updatedBudget: Budget) => {
     dispatch(editBudget(updatedBudget));
@@ -89,7 +85,6 @@ export default function BudgetsPage() {
       <AddNewBudgetModal
         addNewBudgetOpen={addNewBudgetOpen}
         setAddNewBudgetOpen={setAddNewBudgetOpen}
-        onAdd={handleAdd}
       />
     </main>
   );

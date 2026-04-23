@@ -8,10 +8,10 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { mockBudgets } from "../../api/api";
-import type { Theme, Budget, BudgetCategory } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import type { Theme } from "../../types";
+import { addBudget } from "../../features/budget/budgetSlice";
 
-const categories: BudgetCategory[] = mockBudgets.map((b) => b.category);
 const themes: Theme[] = [
   { id: 1, name: "Green", color: "#277C78" },
   { id: 2, name: "Yellow", color: "#F2CDAC" },
@@ -23,19 +23,21 @@ const themes: Theme[] = [
 interface AddNewBudgetModalProps {
   addNewBudgetOpen: boolean;
   setAddNewBudgetOpen: (value: boolean) => void;
-  onAdd: (value: Budget) => void;
 }
 
 export default function AddNewBudgetModal({
   addNewBudgetOpen,
   setAddNewBudgetOpen,
-  onAdd,
 }: AddNewBudgetModalProps) {
+  const budgets = useAppSelector((state) => state.budgets.value);
+  const categories = budgets.map((b) => b.category);
   const [form, setForm] = useState({
     maximum: "",
   });
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +47,7 @@ export default function AddNewBudgetModal({
       maximum: Number(form.maximum),
       theme: selectedTheme.color,
     };
-    onAdd(newBuget);
+    dispatch(addBudget(newBuget));
     setForm({ maximum: "" });
     setSelectedTheme(themes[0]);
     setSelectedCategory(categories[0]);
