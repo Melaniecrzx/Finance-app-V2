@@ -1,30 +1,42 @@
-import { useState } from 'react';
-import AddToPotModal from './AddToPotModal';
-import WithdrawPotModal from './WithdrawPotModal';
-import Button from '../ui/Button';
-import IconEllipsis from '../Icon/IconEllipsis';
-import MenuDropdown from '../ui/MenuDropdown';
-import EditPotModal from './EditPotModal';
-import DeletePotModal from './DeletePotModal';
+import { useState } from "react";
+import AddToPotModal from "./AddToPotModal";
+import WithdrawPotModal from "./WithdrawPotModal";
+import Button from "../ui/Button";
+import IconEllipsis from "../Icon/IconEllipsis";
+import MenuDropdown from "../ui/MenuDropdown";
+import EditPotModal from "./EditPotModal";
+import DeletePotModal from "./DeletePotModal";
+import type { Pot } from "../../types";
 
-export default function PotsCard({ pot, onEdit, onDelete }) {
+interface PotsCardProps {
+  pot: Pot;
+}
+
+interface DropdownLink {
+  id: number;
+  onClick: () => void;
+  label: string;
+  className: string;
+}
+
+export default function PotsCard({ pot }: PotsCardProps) {
   const [addToPotOpen, setAddToPotOpen] = useState(false);
   const [editPotOpen, setEditPotOpen] = useState(false);
   const [deletePotOpen, setDeletePotOpen] = useState(false);
   const [withdrawOpen, setWithdrawOpen] = useState(false);
   const [total, setTotal] = useState(pot.total);
-  const links = [
+  const links: DropdownLink[] = [
     {
       id: 1,
       onClick: () => setEditPotOpen(true),
-      label: 'Edit Pot',
-      className: 'text-grey-900',
+      label: "Edit Pot",
+      className: "text-grey-900",
     },
     {
       id: 2,
       onClick: () => setDeletePotOpen(true),
-      label: 'Delete Pot',
-      className: 'text-red',
+      label: "Delete Pot",
+      className: "text-red",
     },
   ];
 

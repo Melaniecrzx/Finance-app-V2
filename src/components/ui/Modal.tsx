@@ -1,5 +1,12 @@
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import IconCloseModal from '../Icon/IconCloseModal';
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import IconCloseModal from "../Icon/IconCloseModal";
+
+interface ModalProps extends React.PropsWithChildren {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  isDelete?: boolean;
+}
 
 export default function Modal({
   isOpen,
@@ -7,7 +14,7 @@ export default function Modal({
   title,
   children,
   isDelete = false,
-}) {
+}: ModalProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/60" />

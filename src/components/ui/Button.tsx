@@ -1,5 +1,5 @@
 interface ButtonProps extends React.PropsWithChildren {
-  mode: "primary" | "destroy" | "secondary";
+  mode?: "primary" | "destroy" | "secondary";
   className?: string;
   onClick?: React.MouseEventHandler;
   type?: "button" | "submit";
