@@ -8,8 +8,10 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { usePots } from "../../context/PotsContext";
 import type { Theme } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import type { Pot } from "../../types";
+import { addPot } from "../../features/pot/potSlice";
 
 interface AddNewPotProps {
   addNewPotOpen: boolean;
@@ -30,13 +32,14 @@ export default function AddNewPot({
   setAddNewPotOpen,
 }: AddNewPotProps) {
   const [form, setForm] = useState({ name: "", target: "" });
-  const { addPot } = usePots();
+
+  const dispatch = useAppDispatch();
 
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
 
   const charsLeft = 30 - form.name?.length;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newPot = {
       id: Date.now(),
@@ -45,7 +48,7 @@ export default function AddNewPot({
       total: 0,
       theme: selectedTheme.color,
     };
-    addPot(newPot);
+    dispatch(addPot(newPot));
     setForm({ name: "", target: "" });
     setSelectedTheme(themes[0]);
     setAddNewPotOpen(false);

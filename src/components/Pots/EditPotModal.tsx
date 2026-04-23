@@ -8,8 +8,9 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { usePots } from "../../context/PotsContext";
 import type { Pot, Theme } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import { editPot } from "../../features/pot/potSlice";
 
 interface EditPotModalProps {
   editPotOpen: boolean;
@@ -22,11 +23,11 @@ export default function EditPotModal({
   setEditPotOpen,
   pot,
 }: EditPotModalProps) {
-  const { editPot } = usePots();
   const [form, setForm] = useState({
     name: pot.name,
     target: pot.target,
   });
+
   const themes: Theme[] = [
     { id: 1, name: "Green", color: "#277C78" },
     { id: 2, name: "Yellow", color: "#F2CDAC" },
@@ -35,6 +36,8 @@ export default function EditPotModal({
     { id: 5, name: "Red", color: "#C94736" },
     { id: 6, name: "Purple", color: "#826CB0" },
   ];
+
+  const dispatch = useAppDispatch();
 
   const [selectedTheme, setSelectedTheme] = useState(
     themes.find((t) => t.color === pot.theme) ?? themes[0],
@@ -47,11 +50,11 @@ export default function EditPotModal({
     const updatedPot = {
       id: pot.id,
       name: form.name,
-      target: form.target,
+      target: Number(form.target),
       total: pot.total,
       theme: selectedTheme.color,
     };
-    editPot(updatedPot);
+    dispatch(editPot(updatedPot));
     setForm({ name: "", target: 0 });
     setSelectedTheme(themes[0]);
     setEditPotOpen(false);
@@ -93,7 +96,9 @@ export default function EditPotModal({
               <input
                 id="target"
                 value={form.target}
-                onChange={(e) => setForm({ ...form, target: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, target: Number(e.target.value) })
+                }
                 className="outline-none"
               />
             </div>

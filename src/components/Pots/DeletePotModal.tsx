@@ -1,7 +1,8 @@
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
-import { usePots } from "../../context/PotsContext";
 import type { Pot } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import { deletePot } from "../../features/pot/potSlice";
 
 interface DeletePotModalProps {
   deletePotOpen: boolean;
@@ -14,7 +15,8 @@ export default function DeletePotModal({
   setDeletePotOpen,
   pot,
 }: DeletePotModalProps) {
-  const { deletePot } = usePots();
+  const dispatch = useAppDispatch();
+
   return (
     <Modal
       isOpen={deletePotOpen}
@@ -29,7 +31,7 @@ export default function DeletePotModal({
         <Button
           mode="destroy"
           onClick={() => {
-            deletePot(pot.id);
+            dispatch(deletePot(pot.id));
             setDeletePotOpen(false);
           }}
         >

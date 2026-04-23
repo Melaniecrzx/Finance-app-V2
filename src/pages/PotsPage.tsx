@@ -2,11 +2,12 @@ import { useState } from "react";
 import PotsCard from "../components/Pots/PotsCard";
 import Button from "../components/ui/Button";
 import AddNewPot from "../components/Pots/AddNewPot";
-import { usePots } from "../context/PotsContext";
+import { useAppSelector } from "../app/hooks";
 
 export default function PotsPage() {
   const [addNewPotOpen, setAddNewPotOpen] = useState(false);
-  const { pots } = usePots();
+
+  const pots = useAppSelector((state) => state.pots.value);
 
   return (
     <main className="py-8 px-4 mb-10 md:px-10 flex flex-col gap-8 overflow-hidden">
