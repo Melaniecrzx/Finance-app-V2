@@ -1,9 +1,9 @@
-import SummaryCard from '../components/Overview/SummaryCard';
-import PotsOverview from '../components/Overview/PotsOverview';
-import TransactionsOverview from '../components/Overview/TransactionsOverview';
-import BillsOverview from '../components/Overview/BillsOverview';
-import BudgetsOverview from '../components/Overview/BudgetsOverview';
-import { mockBalance } from '../api/api';
+import SummaryCard from "../components/Overview/SummaryCardOverview";
+import PotsOverview from "../components/Overview/PotsOverview.tsx";
+import TransactionsOverview from "../components/Overview/TransactionsOverview";
+import BillsOverview from "../components/Overview/BillsOverview.tsx";
+import BudgetsOverview from "../components/Overview/BudgetsOverview.tsx";
+import { mockBalance } from "../api/api";
 
 export default function OverviewPage() {
   return (
