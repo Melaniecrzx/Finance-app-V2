@@ -1,6 +1,6 @@
 import SummaryCard from "../components/Overview/SummaryCardOverview";
 import PotsOverview from "../components/Overview/PotsOverview.tsx";
-import TransactionsOverview from "../components/Overview/TransactionsOverview";
+import TransactionsOverview from "../components/Overview/TransactionsOverview.tsx";
 import BillsOverview from "../components/Overview/BillsOverview.tsx";
 import BudgetsOverview from "../components/Overview/BudgetsOverview.tsx";
 import { mockBalance } from "../api/api";

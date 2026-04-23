@@ -1,8 +1,8 @@
-interface ChevronRight {
+interface ChevronRightProps {
   className?: string;
 }
 
-export default function ChevronRight({ className }) {
+export default function ChevronRight({ className }: ChevronRightProps) {
   return (
     <svg
       fill="none"

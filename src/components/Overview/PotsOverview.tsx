@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import IconChevronRight from '../Icon/IconChevronRight';
-import IconPot from '../../assets/images/icon-pot.svg';
-import { mockPots } from '../../api/api';
+import { Link } from "react-router-dom";
+import IconChevronRight from "../Icon/IconChevronRight.tsx";
+import IconPot from "../../assets/images/icon-pot.svg";
+import { mockPots } from "../../api/api";
 
 export default function PotsOverview() {
   const totalSaved = mockPots.reduce((acc, p) => acc + p.total, 0);
