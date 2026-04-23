@@ -81,3 +81,10 @@ export interface Pot {
   total: number;
   theme: string;
 }
+
+export interface DropdownLink {
+  id: number;
+  onClick: () => void;
+  label: string;
+  className: string;
+}

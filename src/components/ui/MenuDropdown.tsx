@@ -1,6 +1,12 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import type { DropdownLink } from "../../types";
 
-export default function MenuDropdown({ button, links }) {
+interface MenuDropdownProps {
+  button: React.ReactNode;
+  links: DropdownLink[];
+}
+
+export default function MenuDropdown({ button, links }: MenuDropdownProps) {
   return (
     <Menu>
       <MenuButton>{button}</MenuButton>
