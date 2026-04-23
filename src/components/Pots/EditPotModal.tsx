@@ -52,7 +52,7 @@ export default function EditPotModal({
       theme: selectedTheme.color,
     };
     editPot(updatedPot);
-    setForm({ name: "", target: "" });
+    setForm({ name: "", target: 0 });
     setSelectedTheme(themes[0]);
     setEditPotOpen(false);
   };

@@ -40,7 +40,10 @@ export default function PotsCard({ pot }: PotsCardProps) {
     },
   ];
 
-  const pourcentage = (Math.floor((total / pot.target) * 1000) / 10).toFixed(1);
+  const pourcentage =
+    pot.target === 0
+      ? "0.0"
+      : (Math.floor((total / Number(pot.target)) * 1000) / 10).toFixed(1);
   return (
     <div className="bg-white p-6 rounded-xl w-full flex flex-col gap-8">
       <div className="flex justify-between items-center">

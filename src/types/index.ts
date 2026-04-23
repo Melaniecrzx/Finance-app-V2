@@ -61,7 +61,7 @@ export type BudgetCategory =
 export interface BudgetStats {
   spentBudget: number;
   spentBudgetPercentage: number;
-  remainingBudget: number | string;
+  remainingBudget: number;
   latestSpending: Transaction[];
 }
 
