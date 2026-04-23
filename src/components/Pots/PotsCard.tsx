@@ -55,9 +55,9 @@ export default function PotsCard({ pot }: PotsCardProps) {
           <span className="text-grey-900 font1">${total.toFixed(2)}</span>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="h-2 w-full bg-beige-50 rounded-sm ">
+          <div className="bg-beige-50 w-full h-2 rounded-sm flex items-center px-0.5">
             <div
-              className="h-full rounded-sm"
+              className="h-1.5 rounded-sm"
               style={{ width: `${pourcentage}%`, backgroundColor: pot.theme }}
             ></div>
           </div>

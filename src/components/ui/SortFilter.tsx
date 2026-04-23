@@ -1,7 +1,7 @@
 import { useState } from "react";
-import iconCaretDown from "../../../assets/images/icon-caret-down.svg";
-import IconSort from "../../../assets/images/icon-sort-mobile.svg";
-import type { SortOption } from "../../../types";
+import iconCaretDown from "../../assets/images/icon-caret-down.svg";
+import IconSort from "../../assets/images/icon-sort-mobile.svg";
+import type { SortOption } from "../../types";
 
 interface SortFilterProps {
   value: SortOption;

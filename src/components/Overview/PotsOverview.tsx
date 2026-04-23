@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import IconChevronRight from "../Icon/IconChevronRight.tsx";
 import IconPot from "../../assets/images/icon-pot.svg";
-import { mockPots } from "../../api/api";
+import { useAppSelector } from "../../app/hooks.ts";
 
 export default function PotsOverview() {
-  const totalSaved = mockPots.reduce((acc, p) => acc + p.total, 0);
+  const pots = useAppSelector((state) => state.pots.value);
+
+  const totalSaved = pots.reduce((acc, p) => acc + p.total, 0);
 
   return (
     <section className="bg-white rounded-xl px-5 py-6 md:p-8 flex flex-col gap-5 ">
@@ -27,7 +29,7 @@ export default function PotsOverview() {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4 w-full">
-          {mockPots.slice(0, 4).map((p) => (
+          {pots.slice(0, 4).map((p) => (
             <div key={p.id} className="flex gap-4 items-center">
               <div
                 className="rounded-lg w-1 h-10.75"

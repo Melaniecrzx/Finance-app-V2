@@ -1,11 +1,13 @@
 import IconRecurringBills from "../../assets/images/icon-recurring-bills.svg";
-import { mockTransactions } from "../../api/api";
+import type { Transaction } from "../../types";
 
 const dateFictive: string = "2024-08-01";
 
-const recurringBills = mockTransactions.filter((m) => m.recurring);
+interface BillsSummaryProps {
+  recurringBills: Transaction[];
+}
 
-export default function BillsSummary() {
+export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
   const recurringBillsTotal = (
     recurringBills.reduce((acc, c) => acc + c.amount, 0) / -1
   ).toFixed(2);

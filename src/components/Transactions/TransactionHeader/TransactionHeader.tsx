@@ -1,5 +1,5 @@
-import SearchBar from "./SearchBar";
-import SortFilter from "./SortFilter";
+import SearchBar from "../../ui/SearchBar";
+import SortFilter from "../../ui/SortFilter";
 import CategoryFilter from "./CategoryFilter";
 import type { FilterCategory, SortOption } from "../../../types";
 

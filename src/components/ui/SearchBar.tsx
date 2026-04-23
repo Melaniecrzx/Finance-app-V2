@@ -1,9 +1,9 @@
-import IconSearch from "../../Icon/IconSearch";
+import IconSearch from "../Icon/IconSearch";
 
 interface SearchBarProps {
   searchInput: string;
   setSearchInput: (value: string) => void;
-  setPage: (value: number) => void;
+  setPage?: (value: number) => void | undefined;
 }
 
 export default function SearchBar({
@@ -16,7 +16,7 @@ export default function SearchBar({
       <input
         value={searchInput}
         onChange={(e) => {
-          setPage(1);
+          setPage?.(1);
           setSearchInput(e.target.value);
         }}
         className="outline-none font4-regular"

@@ -1,7 +1,17 @@
-import IconChrevonLeft from '../Icon/IconChrevonLeft';
-import IconChevronRight from '../Icon/IconChevronRight';
+import IconChrevonLeft from "../Icon/IconChrevonLeft";
+import IconChevronRight from "../Icon/IconChevronRight";
 
-export default function TransactionPagination({ total, page, setPage }) {
+interface TransactionPaginationProps {
+  total: number;
+  page: number;
+  setPage: (value: number) => void;
+}
+
+export default function TransactionPagination({
+  total,
+  page,
+  setPage,
+}: TransactionPaginationProps) {
   const totalPages = Math.ceil(total / 10);
 
   return (
@@ -9,7 +19,7 @@ export default function TransactionPagination({ total, page, setPage }) {
       <button
         className="flex gap-4 cursor-pointer items-center border border-beige-500 rounded-lg px-3 py-2.5 transition ease-in-out duration-150 hover:bg-grey-900 hover:text-white disabled:bg-beige-50 disabled:text-grey-900"
         disabled={page === 1}
-        onClick={() => setPage((prev) => prev - 1)}
+        onClick={() => setPage(page - 1)}
       >
         <IconChrevonLeft />
         Prev
@@ -19,7 +29,7 @@ export default function TransactionPagination({ total, page, setPage }) {
           <button
             key={p}
             onClick={() => setPage(p)}
-            className={`border border-beige-500 cursor-pointer rounded-lg px-3 py-2.5 w-10 h-10 ${p === page ? 'bg-grey-900 text-white' : ''}`}
+            className={`border border-beige-500 cursor-pointer rounded-lg px-3 py-2.5 w-10 h-10 ${p === page ? "bg-grey-900 text-white" : ""}`}
           >
             {p}
           </button>
@@ -29,7 +39,7 @@ export default function TransactionPagination({ total, page, setPage }) {
       <button
         className="flex gap-4 cursor-pointer items-center border border-beige-500 rounded-lg px-3 py-2.5 transition ease-in-out duration-150 hover:bg-grey-900 hover:text-white disabled:bg-beige-50 disabled:text-grey-900"
         disabled={page * 10 >= total}
-        onClick={() => setPage((prev) => prev + 1)}
+        onClick={() => setPage(page - +1)}
       >
         Next
         <IconChevronRight />
