@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Main from "./layout/Main";
+import Main from "./layout/Main.tsx";
 
 const OverviewPage = lazy(() => import("./pages/OverviewPage.tsx"));
 const TransactionPage = lazy(() => import("./pages/TransactionPage.tsx"));

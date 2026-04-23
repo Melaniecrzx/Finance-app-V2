@@ -1,5 +1,5 @@
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
+import NavBar from "./NavBar.tsx";
+import SideBar from "./SideBar.tsx";
 import { Outlet } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
