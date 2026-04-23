@@ -95,7 +95,7 @@ export default function PotsCard({ pot }: PotsCardProps) {
         total={total}
         setTotal={setTotal}
       />
-      <EditPotModal
+      {/* <EditPotModal
         editPotOpen={editPotOpen}
         setEditPotOpen={setEditPotOpen}
         pot={pot}
@@ -106,7 +106,7 @@ export default function PotsCard({ pot }: PotsCardProps) {
         setDeletePotOpen={setDeletePotOpen}
         pot={pot}
         onDelete={onDelete}
-      />
+      /> */}
     </div>
   );
 }
