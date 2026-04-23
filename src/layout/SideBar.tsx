@@ -1,50 +1,56 @@
-import { NavLink } from 'react-router-dom';
-import logoLarge from '../assets/images/logo-large.svg';
-import iconOverview from '../assets/images/icon-nav-overview.svg';
-import iconBudgets from '../assets/images/icon-nav-budgets.svg';
-import iconPots from '../assets/images/icon-nav-pots.svg';
-import iconBills from '../assets/images/icon-nav-recurring-bills.svg';
-import IconReceipt from '../components/Icon/IconReceipt';
-import IconMinimize from '../components/Icon/IconMinimize';
-import { motion } from 'framer-motion';
-import { useSideBar } from '../context/SideBarProvider';
-import { useState } from 'react';
+import { NavLink } from "react-router-dom";
+import logoLarge from "../assets/images/logo-large.svg";
+import iconOverview from "../assets/images/icon-nav-overview.svg";
+import iconBudgets from "../assets/images/icon-nav-budgets.svg";
+import iconPots from "../assets/images/icon-nav-pots.svg";
+import iconBills from "../assets/images/icon-nav-recurring-bills.svg";
+import IconReceipt from "../components/Icon/IconReceipt";
+import IconMinimize from "../components/Icon/IconMinimize";
+import { motion } from "framer-motion";
+import { useSideBar } from "../context/SideBarProvider";
+
+interface SideBarPage {
+  id: number;
+  name: string;
+  icon: (isActive: boolean) => React.ReactNode;
+  to: string;
+}
 
 export default function SideBar() {
   const { isSideBarOpen, setIsSideBarOpen } = useSideBar();
 
-  const pages = [
+  const pages: SideBarPage[] = [
     {
       id: 1,
-      name: 'Overview',
+      name: "Overview",
       icon: (isActive) => <img src={iconOverview} alt="" />,
-      to: '/',
+      to: "/",
     },
     {
       id: 2,
-      name: 'Transactions',
+      name: "Transactions",
       icon: (isActive) => (
-        <IconReceipt size={24} color={isActive ? '#277c78' : '#B3B3B3'} />
+        <IconReceipt size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
       ),
-      to: '/transactions',
+      to: "/transactions",
     },
     {
       id: 3,
-      name: 'Budgets',
+      name: "Budgets",
       icon: (isActive) => <img src={iconBudgets} alt="" />,
-      to: '/budgets',
+      to: "/budgets",
     },
     {
       id: 4,
-      name: 'Pots',
+      name: "Pots",
       icon: (isActive) => <img src={iconPots} alt="" />,
-      to: '/pots',
+      to: "/pots",
     },
     {
       id: 5,
-      name: 'Recurring Bills',
+      name: "Recurring Bills",
       icon: (isActive) => <img src={iconBills} alt="" />,
-      to: '/bills',
+      to: "/bills",
     },
   ];
 
@@ -72,7 +78,7 @@ export default function SideBar() {
               <NavLink
                 to={p.to}
                 className={({ isActive }) =>
-                  `flex gap-4 items-center py-4 font3 ${isSideBarOpen ? 'px-8 -ml-8' : 'justify-center w-full border-none'} ${isActive ? 'bg-white rounded-xl text-grey-900 border-l-4 border-green' : ''}`
+                  `flex gap-4 items-center py-4 font3 ${isSideBarOpen ? "px-8 -ml-8" : "justify-center w-full border-none"} ${isActive ? "bg-white rounded-xl text-grey-900 border-l-4 border-green" : ""}`
                 }
               >
                 {({ isActive }) => (
@@ -81,7 +87,7 @@ export default function SideBar() {
                     <motion.span
                       animate={{
                         opacity: isSideBarOpen ? 1 : 0,
-                        width: isSideBarOpen ? 'auto' : 0,
+                        width: isSideBarOpen ? "auto" : 0,
                       }}
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden whitespace-nowrap"
@@ -109,7 +115,7 @@ export default function SideBar() {
         <motion.span
           animate={{
             opacity: isSideBarOpen ? 1 : 0,
-            width: isSideBarOpen ? 'auto' : 0,
+            width: isSideBarOpen ? "auto" : 0,
           }}
           transition={{ duration: 0.2 }}
           className="text-grey-300 overflow-hidden whitespace-nowrap"

@@ -1,10 +1,9 @@
-import NavBar from './NavBar';
-import SideBar from './SideBar';
-import { Outlet, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import NavBar from "./NavBar";
+import SideBar from "./SideBar";
+import { Outlet } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Main() {
-  const location = useLocation();
   return (
     <div className=" flex flex-1 overflow-hidden ">
       <NavBar />
@@ -17,7 +16,7 @@ export default function Main() {
           transition={{ duration: 0.3 }}
           key={location.pathname}
         >
-          <Outlet location={location.pathname} />
+          <Outlet />
         </motion.div>
       </AnimatePresence>
     </div>

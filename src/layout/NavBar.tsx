@@ -1,15 +1,19 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import logoLarge from "../assets/images/logo-large.svg";
 import iconOverview from "../assets/images/icon-nav-overview.svg";
 import iconBudgets from "../assets/images/icon-nav-budgets.svg";
 import iconPots from "../assets/images/icon-nav-pots.svg";
 import iconBills from "../assets/images/icon-nav-recurring-bills.svg";
 import IconReceipt from "../components/Icon/IconReceipt";
-import IconMinimize from "../components/Icon/IconMinimize";
+
+interface NavPage {
+  id: number;
+  name: string;
+  icon: React.ReactNode;
+  to: string;
+}
 
 export default function NavBar() {
-  const pages = [
+  const pages: NavPage[] = [
     {
       id: 1,
       name: "Overview",
