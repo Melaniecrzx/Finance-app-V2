@@ -7,7 +7,7 @@ const OverviewPage = lazy(() => import("./pages/OverviewPage"));
 const TransactionPage = lazy(() => import("./pages/TransactionPage.tsx"));
 const PortsPage = lazy(() => import("./pages/PotsPage"));
 const BudgetsPage = lazy(() => import("./pages/BudgetsPage.tsx"));
-const BillsPage = lazy(() => import("./pages/BillsPage"));
+const BillsPage = lazy(() => import("./pages/BillsPage.tsx"));
 
 const router = createBrowserRouter([
   {

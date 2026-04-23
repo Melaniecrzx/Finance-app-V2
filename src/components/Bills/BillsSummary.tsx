@@ -1,7 +1,7 @@
-import IconRecurringBills from '../../assets/images/icon-recurring-bills.svg';
-import { mockTransactions } from '../../api/api';
+import IconRecurringBills from "../../assets/images/icon-recurring-bills.svg";
+import { mockTransactions } from "../../api/api";
 
-const dateFictive = '2024-08-01';
+const dateFictive: string = "2024-08-01";
 
 const recurringBills = mockTransactions.filter((m) => m.recurring);
 
@@ -26,8 +26,9 @@ export default function BillsSummary() {
   ).toFixed(2);
 
   const dueSoonBills = recurringBills.filter((r) => {
-    const date = new Date(r.date);
-    const diff = (date - new Date(dateFictive)) / (1000 * 60 * 60 * 24);
+    const date = new Date(r.date).getTime();
+    const diff =
+      (date - new Date(dateFictive).getTime()) / (1000 * 60 * 60 * 24);
     return diff >= 0 && diff <= 5;
   });
 
