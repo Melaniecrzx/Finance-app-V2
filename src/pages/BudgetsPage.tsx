@@ -1,10 +1,16 @@
-import BudgetSummary from "../components/Budgets/BudgetSummary";
-import BudgetCard from "../components/Budgets/BudgetCard";
-import Button from "../components/ui/Button";
-import { mockBudgets, mockTransactions } from "../api/api";
+import BudgetSummary from "../components/Budgets/BudgetSummary.tsx";
+import BudgetCard from "../components/Budgets/BudgetCard.tsx";
+import Button from "../components/ui/Button.tsx";
+import { mockTransactions } from "../api/api";
 import { useState } from "react";
-import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal";
+import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal.tsx";
 import type { Budget, BudgetStats, BudgetWithStats } from "../types";
+import { useAppDispatch, useAppSelector } from "../app/hooks.ts";
+import {
+  addBudget,
+  deleteBudget,
+  editBudget,
+} from "../features/budget/budgetSlice.ts";
 
 const dateFictive: string = "2024-08-01";
 
@@ -15,14 +21,13 @@ const calculateBudgetStats = (budget: Budget): BudgetStats => {
   const spentBudget = transactionsBudget
     .filter((t) => new Date(t.date) > new Date(dateFictive))
     .reduce((acc, t) => acc - t.amount, 0);
-  const spentBudgetPercentage = Math.min(
-    (spentBudget / budget.maximum) * 100,
-    100,
-  );
+  const spentBudgetPercentage =
+    budget.maximum === 0
+      ? 0
+      : Math.min((spentBudget / budget.maximum) * 100, 100);
+
   const remainingBudget =
-    budget.maximum - spentBudget > 0
-      ? (budget.maximum - spentBudget).toFixed(2)
-      : 0;
+    budget.maximum - spentBudget > 0 ? budget.maximum - spentBudget : 0;
   const latestSpending = transactionsBudget.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
@@ -38,20 +43,19 @@ const calculateBudgetStats = (budget: Budget): BudgetStats => {
 export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState<boolean>(false);
 
-  const [budgets, setBudgets] = useState<Budget[]>(mockBudgets);
+  const budgets = useAppSelector((state) => state.budgets.value);
+  const dispatch = useAppDispatch();
 
   const handleAdd = (newBudget: Budget) => {
-    setBudgets([...budgets, newBudget]);
+    dispatch(addBudget(newBudget));
   };
 
   const handleEdit = (updatedBudget: Budget) => {
-    setBudgets(
-      budgets.map((b) => (b.id === updatedBudget.id ? updatedBudget : b)),
-    );
+    dispatch(editBudget(updatedBudget));
   };
 
   const handleDelete = (id: number) => {
-    setBudgets(budgets.filter((b) => b.id !== id));
+    dispatch(deleteBudget(id));
   };
 
   const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({

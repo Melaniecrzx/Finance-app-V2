@@ -100,29 +100,28 @@ export default function SideBar() {
             </motion.li>
           ))}
         </ul>
+        <button
+          className="flex gap-4 items-center cursor-pointer"
+          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+        >
+          <motion.div
+            animate={{ rotate: isSideBarOpen ? 0 : 180 }}
+            transition={{ duration: 0.3 }}
+          >
+            <IconMinimize className="text-grey-300" />
+          </motion.div>
+          <motion.span
+            animate={{
+              opacity: isSideBarOpen ? 1 : 0,
+              width: isSideBarOpen ? "auto" : 0,
+            }}
+            transition={{ duration: 0.2 }}
+            className="text-grey-300 overflow-hidden whitespace-nowrap"
+          >
+            Minimize Menu
+          </motion.span>
+        </button>
       </div>
-
-      <button
-        className="flex gap-4 items-center cursor-pointer"
-        onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-      >
-        <motion.div
-          animate={{ rotate: isSideBarOpen ? 0 : 180 }}
-          transition={{ duration: 0.3 }}
-        >
-          <IconMinimize className="text-grey-300" />
-        </motion.div>
-        <motion.span
-          animate={{
-            opacity: isSideBarOpen ? 1 : 0,
-            width: isSideBarOpen ? "auto" : 0,
-          }}
-          transition={{ duration: 0.2 }}
-          className="text-grey-300 overflow-hidden whitespace-nowrap"
-        >
-          Minimize Menu
-        </motion.span>
-      </button>
     </motion.aside>
   );
 }

@@ -68,7 +68,7 @@ export interface BudgetStats {
 export interface Budget {
   id: number;
   category: BudgetCategory;
-  maximum: number | string;
+  maximum: number;
   theme: string;
 }
 
@@ -77,7 +77,7 @@ export interface BudgetWithStats extends Budget, BudgetStats {}
 export interface Pot {
   id: number;
   name: string;
-  target: number | string;
+  target: number;
   total: number;
   theme: string;
 }
