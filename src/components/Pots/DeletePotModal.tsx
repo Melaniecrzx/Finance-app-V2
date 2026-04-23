@@ -1,12 +1,19 @@
-import Modal from '../ui/Modal';
-import Button from '../ui/Button';
-import { usePots } from '../../context/PotsContext';
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import { usePots } from "../../context/PotsContext";
+import type { Pot } from "../../types";
+
+interface DeletePotModalProps {
+  deletePotOpen: boolean;
+  setDeletePotOpen: (value: boolean) => void;
+  pot: Pot;
+}
 
 export default function DeletePotModal({
   deletePotOpen,
   setDeletePotOpen,
   pot,
-}) {
+}: DeletePotModalProps) {
   const { deletePot } = usePots();
   return (
     <Modal

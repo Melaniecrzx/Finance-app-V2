@@ -5,7 +5,7 @@ import Button from "../ui/Button";
 import IconEllipsis from "../Icon/IconEllipsis";
 import MenuDropdown from "../ui/MenuDropdown";
 import EditPotModal from "./EditPotModal.tsx";
-import DeletePotModal from "./DeletePotModal";
+import DeletePotModal from "./DeletePotModal.tsx";
 import type { Pot } from "../../types";
 
 interface PotsCardProps {
@@ -100,12 +100,11 @@ export default function PotsCard({ pot }: PotsCardProps) {
         setEditPotOpen={setEditPotOpen}
         pot={pot}
       />
-      {/* <DeletePotModal
+      <DeletePotModal
         deletePotOpen={deletePotOpen}
         setDeletePotOpen={setDeletePotOpen}
         pot={pot}
-        onDelete={onDelete}
-      /> */}
+      />
     </div>
   );
 }
