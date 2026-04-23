@@ -1,5 +1,5 @@
-import IconEllipsis from "../Icon/IconEllipsis";
-import IconChevronRight from "../Icon/IconChevronRight";
+import IconEllipsis from "../Icon/IconEllipsis.tsx";
+import IconChevronRight from "../Icon/IconChevronRight.tsx";
 import MenuDropdown from "../ui/MenuDropdown.tsx";
 import { useState } from "react";
 import EditBudgetModal from "./EditBudgetModal.tsx";

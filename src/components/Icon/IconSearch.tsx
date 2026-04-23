@@ -1,4 +1,12 @@
-export default function IconSearch({ color = '#201f24', size = 14 }) {
+interface IconSearchProps {
+  color?: string;
+  size?: number;
+}
+
+export default function IconSearch({
+  color = "#201f24",
+  size = 14,
+}: IconSearchProps) {
   return (
     <svg
       fill="none"

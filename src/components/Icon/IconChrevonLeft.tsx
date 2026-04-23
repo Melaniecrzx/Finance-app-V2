@@ -1,4 +1,8 @@
-export default function IconChevronLeft({ className }) {
+interface ChevronLeftProps {
+  className?: string;
+}
+
+export default function IconChevronLeft({ className }: ChevronLeftProps) {
   return (
     <svg
       fill="none"

@@ -1,4 +1,12 @@
-export default function IconMinimize({ size = 20, className }) {
+interface IconMinimizeProps {
+  size?: number;
+  className?: string;
+}
+
+export default function IconMinimize({
+  size = 20,
+  className,
+}: IconMinimizeProps) {
   return (
     <svg
       fill="none"

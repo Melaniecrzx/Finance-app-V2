@@ -1,4 +1,12 @@
-export default function IconReceipt({ size = 32, color = 'currentColor' }) {
+interface IconReceiptProps {
+  size?: number;
+  color?: string;
+}
+
+export default function IconReceipt({
+  size = 32,
+  color = "currentColor",
+}: IconReceiptProps) {
   return (
     <svg
       fill="none"

@@ -1,4 +1,8 @@
-export default function IconCloseModal({ className }) {
+interface IconCloseModalProps {
+  className?: string;
+}
+
+export default function IconCloseModal({ className }: IconCloseModalProps) {
   return (
     <svg
       fill="none"

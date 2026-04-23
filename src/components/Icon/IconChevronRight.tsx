@@ -1,3 +1,7 @@
+interface ChevronRight {
+  className?: string;
+}
+
 export default function ChevronRight({ className }) {
   return (
     <svg

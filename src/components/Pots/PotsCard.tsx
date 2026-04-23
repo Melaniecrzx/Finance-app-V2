@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddToPotModal from "./AddToPotModal.tsx";
 import WithdrawPotModal from "./WithdrawPotModal.tsx";
 import Button from "../ui/Button";
-import IconEllipsis from "../Icon/IconEllipsis";
+import IconEllipsis from "../Icon/IconEllipsis.tsx";
 import MenuDropdown from "../ui/MenuDropdown.tsx";
 import EditPotModal from "./EditPotModal.tsx";
 import DeletePotModal from "./DeletePotModal.tsx";

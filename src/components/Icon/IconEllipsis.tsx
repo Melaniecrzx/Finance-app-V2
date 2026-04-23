@@ -1,4 +1,8 @@
-export default function IconEllipsis({ className }) {
+interface IconEllipsisProps {
+  className?: string;
+}
+
+export default function IconEllipsis({ className }: IconEllipsisProps) {
   return (
     <svg
       fill="none"
