@@ -37,7 +37,7 @@ export default function AddNewBudgetModal({
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newBuget = {
       id: Date.now(),

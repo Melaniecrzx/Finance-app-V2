@@ -3,20 +3,13 @@ import AddToPotModal from "./AddToPotModal.tsx";
 import WithdrawPotModal from "./WithdrawPotModal.tsx";
 import Button from "../ui/Button";
 import IconEllipsis from "../Icon/IconEllipsis";
-import MenuDropdown from "../ui/MenuDropdown";
+import MenuDropdown from "../ui/MenuDropdown.tsx";
 import EditPotModal from "./EditPotModal.tsx";
 import DeletePotModal from "./DeletePotModal.tsx";
-import type { Pot } from "../../types";
+import type { Pot, DropdownLink } from "../../types";
 
 interface PotsCardProps {
   pot: Pot;
-}
-
-interface DropdownLink {
-  id: number;
-  onClick: () => void;
-  label: string;
-  className: string;
 }
 
 export default function PotsCard({ pot }: PotsCardProps) {

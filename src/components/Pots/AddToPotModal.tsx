@@ -20,9 +20,20 @@ export default function AddToPotModal({
 }: AddToPotModalProps) {
   const [amountToAdd, setAmountToAdd] = useState("");
   const newAmount = total + Number(amountToAdd);
-  const pourcentage = (Math.floor((total / pot.target) * 1000) / 10).toFixed(1);
-  const newPourcentage = Math.floor((Number(amountToAdd) / pot.target) * 100);
-  const totalPourcentage = (Number(pourcentage) + newPourcentage).toFixed(2);
+  const pourcentage =
+    pot.target === 0
+      ? "0.0"
+      : (Math.floor((total / Number(pot.target)) * 1000) / 10).toFixed(1);
+
+  const newPourcentage =
+    pot.target === 0
+      ? 0
+      : Math.floor((Number(amountToAdd) / Number(pot.target)) * 100);
+
+  const totalPourcentage =
+    pot.target === 0
+      ? "0.00"
+      : (Number(pourcentage) + newPourcentage).toFixed(2);
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();

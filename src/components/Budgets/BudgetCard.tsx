@@ -1,23 +1,16 @@
 import IconEllipsis from "../Icon/IconEllipsis";
 import IconChevronRight from "../Icon/IconChevronRight";
-import MenuDropdown from "../ui/MenuDropdown";
+import MenuDropdown from "../ui/MenuDropdown.tsx";
 import { useState } from "react";
-import EditBudgetModal from "./EditBudgetModal";
-import DeleteBudgetModal from "./DeleteBudgetModal";
-import type { Budget, BudgetStats } from "../../types";
+import EditBudgetModal from "./EditBudgetModal.tsx";
+import DeleteBudgetModal from "./DeleteBudgetModal.tsx";
+import type { Budget, BudgetStats, DropdownLink } from "../../types";
 
 interface BudgetCardProps {
   budget: Budget;
   stats: BudgetStats;
   onEdit: (value: Budget) => void;
   onDelete: (value: number) => void;
-}
-
-interface DropdownLink {
-  id: number;
-  onClick: () => void;
-  label: string;
-  className: string;
 }
 
 export default function BudgetCard({

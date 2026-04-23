@@ -45,7 +45,7 @@ export default function EditBudgetModal({
     themes.find((t) => t.color === budget.theme) ?? themes[0],
   );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const editBudget = {
       id: budget.id,
