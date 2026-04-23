@@ -8,21 +8,20 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { mockBudgets } from "../../api/api";
 import type { Budget, Theme } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { editBudget } from "../../features/budget/budgetSlice";
 
 interface EditBudgetModalProps {
   editBudgetOpen: boolean;
   setEditBudgetOpen: (value: boolean) => void;
   budget: Budget;
-  onEdit: (value: Budget) => void;
 }
 
 export default function EditBudgetModal({
   editBudgetOpen,
   setEditBudgetOpen,
   budget,
-  onEdit,
 }: EditBudgetModalProps) {
   const [form, setForm] = useState<{ maximum: number }>({
     maximum: budget.maximum,
@@ -35,7 +34,10 @@ export default function EditBudgetModal({
     { id: 5, name: "Red", color: "#C94736" },
     { id: 6, name: "Purple", color: "#826CB0" },
   ];
-  const categories = mockBudgets.map((b) => b.category);
+
+  const budgets = useAppSelector((state) => state.budgets.value);
+
+  const categories = budgets.map((b) => b.category);
 
   const [selectedCategory, setSelectedCategory] = useState(
     categories.find((c) => c === budget.category) ?? categories[0],
@@ -45,15 +47,17 @@ export default function EditBudgetModal({
     themes.find((t) => t.color === budget.theme) ?? themes[0],
   );
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const editBudget = {
+    const updatedBudget = {
       id: budget.id,
       category: selectedCategory,
       maximum: form.maximum,
       theme: selectedTheme.color,
     };
-    onEdit(editBudget);
+    dispatch(editBudget(updatedBudget));
     setForm({ maximum: 0 });
     setSelectedCategory(categories[0]);
     setSelectedTheme(themes[0]);

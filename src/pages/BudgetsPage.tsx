@@ -5,12 +5,7 @@ import { mockTransactions } from "../api/api";
 import { useState } from "react";
 import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal.tsx";
 import type { Budget, BudgetStats, BudgetWithStats } from "../types";
-import { useAppDispatch, useAppSelector } from "../app/hooks.ts";
-import {
-  addBudget,
-  deleteBudget,
-  editBudget,
-} from "../features/budget/budgetSlice.ts";
+import { useAppSelector } from "../app/hooks.ts";
 
 const dateFictive: string = "2024-08-01";
 
@@ -44,15 +39,6 @@ export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
 
   const budgets = useAppSelector((state) => state.budgets.value);
-  const dispatch = useAppDispatch();
-
-  const handleEdit = (updatedBudget: Budget) => {
-    dispatch(editBudget(updatedBudget));
-  };
-
-  const handleDelete = (id: number) => {
-    dispatch(deleteBudget(id));
-  };
 
   const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
     ...b,
@@ -71,13 +57,7 @@ export default function BudgetsPage() {
         <BudgetSummary budgets={budgetsWithStats} />
         <div className="flex flex-col gap-6 flex-1 min-w-0">
           {budgets.map((m) => (
-            <BudgetCard
-              key={m.id}
-              budget={m}
-              stats={calculateBudgetStats(m)}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+            <BudgetCard key={m.id} budget={m} stats={calculateBudgetStats(m)} />
           ))}
         </div>
       </div>
