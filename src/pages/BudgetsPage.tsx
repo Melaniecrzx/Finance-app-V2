@@ -1,39 +1,11 @@
 import BudgetSummary from "../components/Budgets/BudgetSummary.tsx";
 import BudgetCard from "../components/Budgets/BudgetCard.tsx";
 import Button from "../components/ui/Button.tsx";
-import { mockTransactions } from "../api/api";
 import { useState } from "react";
 import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal.tsx";
-import type { Budget, BudgetStats, BudgetWithStats } from "../types";
+import type { BudgetWithStats } from "../types";
 import { useAppSelector } from "../app/hooks.ts";
-
-const dateFictive: string = "2024-08-01";
-
-const calculateBudgetStats = (budget: Budget): BudgetStats => {
-  const transactionsBudget = mockTransactions.filter(
-    (t) => t.category.toLowerCase() === budget.category.toLowerCase(),
-  );
-  const spentBudget = transactionsBudget
-    .filter((t) => new Date(t.date) > new Date(dateFictive))
-    .reduce((acc, t) => acc - t.amount, 0);
-  const spentBudgetPercentage =
-    budget.maximum === 0
-      ? 0
-      : Math.min((spentBudget / budget.maximum) * 100, 100);
-
-  const remainingBudget =
-    budget.maximum - spentBudget > 0 ? budget.maximum - spentBudget : 0;
-  const latestSpending = transactionsBudget.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-
-  return {
-    spentBudget,
-    spentBudgetPercentage,
-    remainingBudget,
-    latestSpending,
-  };
-};
+import { calculateBudgetStats } from "../utils/budgetUtils.ts";
 
 export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);

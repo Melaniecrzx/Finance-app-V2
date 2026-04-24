@@ -2,9 +2,25 @@ import { Link } from "react-router-dom";
 import IconChevronRight from "../Icon/IconChevronRight";
 import { Pie, PieChart, Cell, Tooltip } from "recharts";
 import { useAppSelector } from "../../app/hooks";
+import { calculateBudgetStats } from "../../utils/budgetUtils";
+import type { BudgetWithStats } from "../../types";
 
 export default function BudgetsOverview() {
   const budgets = useAppSelector((state) => state.budgets.value);
+
+  const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
+    ...b,
+    ...calculateBudgetStats(b),
+  }));
+
+  const spentBudgetTotal = budgetsWithStats.reduce(
+    (acc, b) => acc + b.spentBudget,
+    0,
+  );
+  const maximumBudgetTotal = budgetsWithStats.reduce(
+    (acc, b) => acc + b.maximum,
+    0,
+  );
 
   return (
     <section className="bg-white rounded-xl px-5 py-6 md:p-8 flex flex-col gap-5 ">
@@ -19,36 +35,47 @@ export default function BudgetsOverview() {
         </Link>
       </div>{" "}
       <div className=" flex items-center gap-4">
-        <PieChart width={240} height={240}>
-          <Pie
-            data={budgets}
-            dataKey="maximum"
-            innerRadius={90}
-            outerRadius={120}
-            stroke="none"
-          >
-            {budgets.map((budget) => (
-              <Cell key={budget.id} fill={budget.theme} fillOpacity={1} />
-            ))}
-          </Pie>
-          <Pie
-            data={budgets}
-            dataKey="maximum"
-            innerRadius={75}
-            outerRadius={90}
-            stroke="none"
-          >
-            {budgets.map((budget) => (
-              <Cell key={budget.id} fill={budget.theme} fillOpacity={0.7} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
+        <div className="relative flex items-center justify-center">
+          <PieChart width={240} height={240}>
+            <Pie
+              data={budgets}
+              dataKey="maximum"
+              innerRadius={90}
+              outerRadius={120}
+              stroke="none"
+            >
+              {budgets.map((budget) => (
+                <Cell key={budget.id} fill={budget.theme} fillOpacity={1} />
+              ))}
+            </Pie>
+            <Pie
+              data={budgets}
+              dataKey="maximum"
+              innerRadius={75}
+              outerRadius={90}
+              stroke="none"
+            >
+              {budgets.map((budget) => (
+                <Cell key={budget.id} fill={budget.theme} fillOpacity={0.7} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+          <div className="absolute flex flex-col gap-1 items-center">
+            <span className="font1 text-grey-900">
+              ${spentBudgetTotal.toFixed(2)}
+            </span>
+            <span className="font5-regular text-grey-500">
+              of ${maximumBudgetTotal} limit
+            </span>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-4">
           {budgets.map((b) => (
             <div key={b.id} className="flex gap-4">
               <div
-                className="rounded-lg h-[43px] w-2 items-center"
+                className="rounded-lg h-10.75 w-2 items-center"
                 style={{ backgroundColor: b.theme }}
               ></div>
               <div className="flex flex-col gap-2">
