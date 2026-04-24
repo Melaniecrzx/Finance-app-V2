@@ -1,9 +1,11 @@
 import NavBar from "./NavBar.tsx";
 import SideBar from "./SideBar.tsx";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Main() {
+  const location = useLocation();
+
   return (
     <div className=" flex flex-1 overflow-hidden ">
       <NavBar />
