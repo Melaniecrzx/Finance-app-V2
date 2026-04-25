@@ -34,7 +34,7 @@ export default function BudgetsOverview() {
           <IconChevronRight className="w-3 h-3" />
         </Link>
       </div>{" "}
-      <div className=" flex items-center gap-4">
+      <div className=" flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
         <div className="relative flex items-center justify-center">
           <PieChart width={240} height={240}>
             <Pie
@@ -71,7 +71,7 @@ export default function BudgetsOverview() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-1  gap-4">
           {budgets.map((b) => (
             <div key={b.id} className="flex gap-4">
               <div
