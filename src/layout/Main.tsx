@@ -7,7 +7,7 @@ export default function Main() {
   const location = useLocation();
 
   return (
-    <div className=" flex flex-1 overflow-hidden ">
+    <div className="flex h-screen overflow-hidden">
       <NavBar />
       <SideBar />
       <AnimatePresence mode="wait">
