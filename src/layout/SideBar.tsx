@@ -7,7 +7,8 @@ import iconBills from "../assets/images/icon-nav-recurring-bills.svg";
 import IconReceipt from "../components/Icon/IconReceipt";
 import IconMinimize from "../components/Icon/IconMinimize";
 import { motion } from "framer-motion";
-import { useSideBar } from "../context/SideBarProvider";
+import { sideBarAtom } from "../atoms/atoms";
+import { useAtom } from "jotai";
 
 interface SideBarPage {
   id: number;
@@ -17,7 +18,7 @@ interface SideBarPage {
 }
 
 export default function SideBar() {
-  const { isSideBarOpen, setIsSideBarOpen } = useSideBar();
+  const [isSideBarOpen, setIsSideBarOpen] = useAtom(sideBarAtom);
 
   const pages: SideBarPage[] = [
     {
