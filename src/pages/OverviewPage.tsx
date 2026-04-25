@@ -27,7 +27,7 @@ export default function OverviewPage() {
 
         <div className="flex flex-col gap-6 lg:w-107.5 shrink-0">
           <BudgetsOverview />
-          <BillsOverview className="flex-1 h-full" />
+          <BillsOverview />
         </div>
       </div>
     </main>
