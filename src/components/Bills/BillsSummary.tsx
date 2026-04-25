@@ -12,25 +12,26 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
     recurringBills.reduce((acc, c) => acc + c.amount, 0) / -1
   ).toFixed(2);
 
-  const paidBillsTotal = (
+  const paidBillsArr = paidBills(recurringBills, DATE_FICTIVE);
+  const upcomingBillsArr = upcomingBills(recurringBills, DATE_FICTIVE);
+  const dueSoonBillsArr = dueSoonBills(recurringBills, DATE_FICTIVE);
+
+  const paidBillsTotal = Math.abs(
     paidBills(recurringBills, DATE_FICTIVE).reduce(
       (acc, c) => acc + c.amount,
       0,
-    ) / -1
+    ),
   ).toFixed(2);
 
-  const upcomingBillsTotal = (
-    upcomingBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ) / -1
+  console.log(paidBillsArr);
+
+  const upcomingBillsTotal = Math.abs(
+    upcomingBillsArr.reduce((acc, c) => acc + c.amount, 0),
   ).toFixed(2);
 
-  const dueSoonBillsTotal =
-    dueSoonBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ) / -1;
+  const dueSoonBillsTotal = Math.abs(
+    dueSoonBillsArr.reduce((acc, c) => acc + c.amount, 0),
+  );
 
   return (
     <section className="flex flex-col gap-3 md:flex-row md:gap-6 lg:flex-col">
@@ -51,7 +52,7 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
           <div className="flex justify-between  pb-3 border-b border-beige-50">
             <span className="font5-regular text-grey-500">Paid Bills</span>
             <span className="font5-bold text-grey-900">
-              {paidBills.length} (${paidBillsTotal})
+              {paidBillsArr.length} (${paidBillsTotal})
             </span>
           </div>
           <div className="flex justify-between items-center border-b border-beige-50">
@@ -59,13 +60,13 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
               Upcoming Bills
             </span>
             <span className="font5-bold text-grey-900">
-              {upcomingBills.length} (${upcomingBillsTotal})
+              {upcomingBillsArr.length} (${upcomingBillsTotal})
             </span>
           </div>
           <div className="flex justify-between pt-3">
             <span className="font5-regular text-red">Due Soon</span>
             <span className="font5-bold text-red">
-              {dueSoonBills.length} (${dueSoonBillsTotal.toFixed(2)})
+              {dueSoonBillsArr.length} (${dueSoonBillsTotal.toFixed(2)})
             </span>
           </div>
         </div>
