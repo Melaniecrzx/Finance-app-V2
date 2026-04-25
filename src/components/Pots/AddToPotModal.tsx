@@ -2,28 +2,26 @@ import { useState } from "react";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import type { Pot } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import { addMoney } from "../../features/pot/potSlice";
 
 interface AddToPotModalProps {
   addToPotOpen: boolean;
   setAddToPotOpen: (value: boolean) => void;
   pot: Pot;
-  total: number;
-  setTotal: (value: number) => void;
 }
 
 export default function AddToPotModal({
   addToPotOpen,
   setAddToPotOpen,
   pot,
-  total,
-  setTotal,
 }: AddToPotModalProps) {
   const [amountToAdd, setAmountToAdd] = useState("");
-  const newAmount = total + Number(amountToAdd);
+  const newAmount = pot.total + Number(amountToAdd);
   const pourcentage =
     pot.target === 0
       ? "0.0"
-      : (Math.floor((total / Number(pot.target)) * 1000) / 10).toFixed(1);
+      : (Math.floor((pot.total / Number(pot.target)) * 1000) / 10).toFixed(1);
 
   const newPourcentage =
     pot.target === 0
@@ -35,10 +33,12 @@ export default function AddToPotModal({
       ? "0.00"
       : (Number(pourcentage) + newPourcentage).toFixed(2);
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amountToAdd.trim() === "") return;
-    setTotal(total + Number(amountToAdd));
+    dispatch(addMoney({ id: pot.id, amount: Number(amountToAdd) }));
     setAmountToAdd("");
     setAddToPotOpen(false);
   };

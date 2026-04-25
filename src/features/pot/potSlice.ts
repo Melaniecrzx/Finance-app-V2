@@ -25,8 +25,29 @@ export const potSlice = createSlice({
     deletePot: (state, action: PayloadAction<number>) => {
       state.value = state.value.filter((p) => p.id !== action.payload);
     },
+    addMoney: (
+      state,
+      action: PayloadAction<{ id: number; amount: number }>,
+    ) => {
+      state.value = state.value.map((p) =>
+        p.id === action.payload.id
+          ? { ...p, total: p.total + action.payload.amount }
+          : p,
+      );
+    },
+    withdrawMoney: (
+      state,
+      action: PayloadAction<{ id: number; amount: number }>,
+    ) => {
+      state.value = state.value.map((p) =>
+        p.id === action.payload.id
+          ? { ...p, total: p.total - action.payload.amount }
+          : p,
+      );
+    },
   },
 });
 
-export const { addPot, editPot, deletePot } = potSlice.actions;
+export const { addPot, editPot, deletePot, addMoney, withdrawMoney } =
+  potSlice.actions;
 export default potSlice.reducer;

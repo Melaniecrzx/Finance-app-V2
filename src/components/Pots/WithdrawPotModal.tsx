@@ -2,26 +2,29 @@ import { useState } from "react";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import type { Pot } from "../../types";
+import { withdrawMoney } from "../../features/pot/potSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 interface WithdrawPotModalProps {
   withdrawOpen: boolean;
   setWithdrawOpen: (value: boolean) => void;
   pot: Pot;
-  total: number;
-  setTotal: (value: number) => void;
 }
 
 export default function WithdrawPotModal({
   withdrawOpen,
   setWithdrawOpen,
   pot,
-  total,
-  setTotal,
 }: WithdrawPotModalProps) {
   const [amountToWithdraw, setAmountToWithdraw] = useState("");
   const [error, setError] = useState("");
-  const newAmount = total - Number(amountToWithdraw);
-  const pourcentage = (Math.floor((total / pot.target) * 1000) / 10).toFixed(1);
+
+  const dispatch = useAppDispatch();
+
+  const newAmount = pot.total - Number(amountToWithdraw);
+  const pourcentage = (
+    Math.floor((pot.total / pot.target) * 1000) / 10
+  ).toFixed(1);
   const newPourcentage = Math.floor(
     (Number(amountToWithdraw) / pot.target) * 100,
   );
@@ -30,16 +33,15 @@ export default function WithdrawPotModal({
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amountToWithdraw.trim() === "") return;
-    if (Number(amountToWithdraw) > total) {
+    if (Number(amountToWithdraw) > pot.total) {
       return;
     }
     setError("");
-    setTotal(total - Number(amountToWithdraw));
+    dispatch(withdrawMoney({ id: pot.id, amount: Number(amountToWithdraw) }));
     setAmountToWithdraw("");
     setWithdrawOpen(false);
   };
 
-  console.log(error);
   return (
     <Modal
       isOpen={withdrawOpen}
@@ -80,7 +82,7 @@ export default function WithdrawPotModal({
                 value={amountToWithdraw}
                 onChange={(e) => {
                   setAmountToWithdraw(e.target.value);
-                  if (Number(e.target.value) > total) {
+                  if (Number(e.target.value) > pot.total) {
                     setError("Amount exceeds total saved");
                   } else {
                     setError("");

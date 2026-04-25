@@ -17,7 +17,6 @@ export default function PotsCard({ pot }: PotsCardProps) {
   const [editPotOpen, setEditPotOpen] = useState(false);
   const [deletePotOpen, setDeletePotOpen] = useState(false);
   const [withdrawOpen, setWithdrawOpen] = useState(false);
-  const [total, setTotal] = useState(pot.total);
   const links: DropdownLink[] = [
     {
       id: 1,
@@ -36,7 +35,7 @@ export default function PotsCard({ pot }: PotsCardProps) {
   const pourcentage =
     pot.target === 0
       ? "0.0"
-      : (Math.floor((total / Number(pot.target)) * 1000) / 10).toFixed(1);
+      : (Math.floor((pot.total / Number(pot.target)) * 1000) / 10).toFixed(1);
   return (
     <div className="bg-white p-6 rounded-xl w-full flex flex-col gap-8">
       <div className="flex justify-between items-center">
@@ -52,7 +51,7 @@ export default function PotsCard({ pot }: PotsCardProps) {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <p className="font4-regular text-grey-500">Total Saved</p>
-          <span className="text-grey-900 font1">${total.toFixed(2)}</span>
+          <span className="text-grey-900 font1">${pot.total.toFixed(2)}</span>
         </div>
         <div className="flex flex-col gap-3">
           <div className="bg-beige-50 w-full h-2 rounded-sm flex items-center px-0.5">
@@ -81,15 +80,11 @@ export default function PotsCard({ pot }: PotsCardProps) {
         addToPotOpen={addToPotOpen}
         setAddToPotOpen={setAddToPotOpen}
         pot={pot}
-        total={total}
-        setTotal={setTotal}
       />
       <WithdrawPotModal
         withdrawOpen={withdrawOpen}
         setWithdrawOpen={setWithdrawOpen}
         pot={pot}
-        total={total}
-        setTotal={setTotal}
       />
       <EditPotModal
         editPotOpen={editPotOpen}

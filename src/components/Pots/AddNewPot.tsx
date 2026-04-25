@@ -10,7 +10,6 @@ import {
 } from "@headlessui/react";
 import type { Theme } from "../../types";
 import { useAppDispatch } from "../../app/hooks";
-import type { Pot } from "../../types";
 import { addPot } from "../../features/pot/potSlice";
 
 interface AddNewPotProps {
