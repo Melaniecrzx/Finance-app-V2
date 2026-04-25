@@ -5,7 +5,6 @@ interface ModalProps extends React.PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  isDelete?: boolean;
 }
 
 export default function Modal({
@@ -13,7 +12,6 @@ export default function Modal({
   onClose,
   title,
   children,
-  isDelete = false,
 }: ModalProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">

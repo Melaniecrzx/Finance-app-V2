@@ -51,7 +51,10 @@ export default function BudgetSummary({ budgets }: BudgetSummaryProps) {
         <h2 className="font2 text-grey-900">Spending Summary</h2>
         <div>
           {budgets.map((b) => (
-            <div className="border-b border-grey-100 items-center flex justify-between last:border-none py-4">
+            <div
+              key={b.id}
+              className="border-b border-grey-100 items-center flex justify-between last:border-none py-4"
+            >
               <div className="flex gap-4 items-center">
                 <div
                   className="h-5.25 w-1 rounded-lg"

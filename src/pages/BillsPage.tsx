@@ -4,10 +4,22 @@ import { mockTransactions } from "../api/api";
 import { useState } from "react";
 import type { SortOption } from "../types/index";
 import BillsHeader from "../components/Bills/BillsHeader";
+import { DATE_FICTIVE } from "../constants";
 
 export default function BillsPage() {
-  const recurringBills = mockTransactions.filter((m) => m.recurring);
-  const [searchInput, setSearchInput] = useState("");
+  const getMonthlyDate = (dateString: string, referenceDate: string): Date => {
+    const day = new Date(dateString).getDate();
+    const ref = new Date(referenceDate);
+    return new Date(ref.getFullYear(), ref.getMonth(), day);
+  };
+  const recurringBills = mockTransactions
+    .filter((m) => m.recurring)
+    .map((b) => ({
+      ...b,
+      date: getMonthlyDate(b.date, DATE_FICTIVE).toISOString(),
+    }));
+
+  const [searchInput, setSearchInput] = useState<string>("");
   const [sort, setSort] = useState<SortOption>("latest");
 
   const sortBills = [...recurringBills]
@@ -23,10 +35,11 @@ export default function BillsPage() {
       if (sort === "lowest") return a.amount - b.amount;
       return 0;
     });
+
   return (
-    <main className="py-8 px-4 md:px-10 flex flex-col gap-8">
+    <main className="py-8 px-4 md:px-10 flex flex-col gap-8 mb-20">
       <h1 className="font1 text-grey-900">Recurring Bills</h1>
-      <div className="flex gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         <BillsSummary recurringBills={sortBills} />
         <section className="bg-white rounded-xl py-6 px-5 md:p-8 flex flex-col gap-6">
           <BillsHeader
