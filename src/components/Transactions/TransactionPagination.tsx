@@ -39,7 +39,7 @@ export default function TransactionPagination({
       <button
         className="flex gap-4 cursor-pointer items-center border border-beige-500 rounded-lg px-3 py-2.5 transition ease-in-out duration-150 hover:bg-grey-900 hover:text-white disabled:bg-beige-50 disabled:text-grey-900"
         disabled={page * 10 >= total}
-        onClick={() => setPage(page - +1)}
+        onClick={() => setPage(page + 1)}
       >
         Next
         <IconChevronRight />
