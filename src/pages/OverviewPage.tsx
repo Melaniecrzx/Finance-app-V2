@@ -19,7 +19,7 @@ export default function OverviewPage() {
         <SummaryCard title="Income" amount={mockBalance.income} />
         <SummaryCard title="Expenses" amount={mockBalance.expenses} />
       </div>
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 items-stretch">
         <div className="flex flex-col gap-6 flex-1 min-w-0">
           <PotsOverview />
           <TransactionsOverview />
@@ -27,7 +27,7 @@ export default function OverviewPage() {
 
         <div className="flex flex-col gap-6 lg:w-107.5 shrink-0">
           <BudgetsOverview />
-          <BillsOverview />
+          <BillsOverview className="flex-1 h-full" />
         </div>
       </div>
     </main>
