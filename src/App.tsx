@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { ClipLoader } from "react-spinners";
 import Main from "./layout/Main.tsx";
 
 const OverviewPage = lazy(() => import("./pages/OverviewPage.tsx"));
@@ -12,7 +12,13 @@ const BillsPage = lazy(() => import("./pages/BillsPage.tsx"));
 const router = createBrowserRouter([
   {
     element: (
-      <Suspense fallback={<p>Chargement...</p>}>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-screen w-full">
+            <ClipLoader color="#277c78" size={35} />
+          </div>
+        }
+      >
         <Main />
       </Suspense>
     ),
