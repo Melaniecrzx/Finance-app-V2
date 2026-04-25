@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
 import logoLarge from "../assets/images/logo-large.svg";
-import iconOverview from "../assets/images/icon-nav-overview.svg";
-import iconBudgets from "../assets/images/icon-nav-budgets.svg";
-import iconPots from "../assets/images/icon-nav-pots.svg";
-import iconBills from "../assets/images/icon-nav-recurring-bills.svg";
+import logoSmall from "../assets/images/logo-small.svg";
+import IconOverview from "../components/Icon/IconOverview";
+import IconBudget from "../components/Icon/IconBudget";
+import IconPot from "../components/Icon/IconPot";
+import IconTransaction from "../components/Icon/IconTransaction";
 import IconReceipt from "../components/Icon/IconReceipt";
 import IconMinimize from "../components/Icon/IconMinimize";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { sideBarAtom } from "../atoms/atoms";
 import { useAtom } from "jotai";
 
@@ -24,33 +25,41 @@ export default function SideBar() {
     {
       id: 1,
       name: "Overview",
-      icon: (isActive) => <img src={iconOverview} alt="" />,
+      icon: (isActive) => (
+        <IconOverview size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
+      ),
       to: "/",
     },
     {
       id: 2,
       name: "Transactions",
       icon: (isActive) => (
-        <IconReceipt size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
+        <IconTransaction size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
       ),
       to: "/transactions",
     },
     {
       id: 3,
       name: "Budgets",
-      icon: (isActive) => <img src={iconBudgets} alt="" />,
+      icon: (isActive) => (
+        <IconBudget size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
+      ),
       to: "/budgets",
     },
     {
       id: 4,
       name: "Pots",
-      icon: (isActive) => <img src={iconPots} alt="" />,
+      icon: (isActive) => (
+        <IconPot size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
+      ),
       to: "/pots",
     },
     {
       id: 5,
       name: "Recurring Bills",
-      icon: (isActive) => <img src={iconBills} alt="" />,
+      icon: (isActive) => (
+        <IconReceipt size={24} color={isActive ? "#277c78" : "#B3B3B3"} />
+      ),
       to: "/bills",
     },
   ];
@@ -65,21 +74,44 @@ export default function SideBar() {
       }}
       transition={{ duration: 0.3 }}
     >
-      <div className="flex flex-col gap-16">
-        <motion.img
-          src={logoLarge}
-          alt="logo Finance app"
-          animate={{ opacity: isSideBarOpen ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="w-30.5"
-        />
+      <div className="flex flex-col gap-16 items-start">
+        <AnimatePresence mode="wait">
+          {isSideBarOpen ? (
+            <motion.img
+              key="large"
+              src={logoLarge}
+              alt="logo Finance app"
+              className="h-[22px] "
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          ) : (
+            <motion.img
+              key="small"
+              src={logoSmall}
+              alt="logo Finance app"
+              className="h-[22px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          )}
+        </AnimatePresence>
+
         <ul className="flex flex-col gap-8 text-grey-300">
           {pages.map((p) => (
-            <motion.li key={p.id}>
+            <motion.li key={p.id} className={!isSideBarOpen ? "-ml-6" : ""}>
               <NavLink
                 to={p.to}
                 className={({ isActive }) =>
-                  `flex gap-4 items-center py-4 font3 ${isSideBarOpen ? "px-8 -ml-8" : "justify-center w-full border-none"} ${isActive ? "bg-white rounded-xl text-grey-900 border-l-4 border-green" : ""}`
+                  `flex gap-4 items-center py-4 font3 transition-colors duration-200 ${
+                    isSideBarOpen
+                      ? `px-8 -ml-8 ${isActive ? "bg-white rounded-xl text-grey-900 border-l-4 border-green" : ""}`
+                      : `justify-center w-full px-4 ${isActive ? "bg-white rounded-r-xl" : ""}`
+                  }`
                 }
               >
                 {({ isActive }) => (
