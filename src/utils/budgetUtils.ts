@@ -7,7 +7,7 @@ export const calculateBudgetStats = (budget: Budget): BudgetStats => {
     (t) => t.category.toLowerCase() === budget.category.toLowerCase(),
   );
   const spentBudget = transactionsBudget
-    .filter((t) => new Date(t.date) > new Date(DATE_FICTIVE))
+    .filter((t) => new Date(t.date) < new Date(DATE_FICTIVE))
     .reduce((acc, t) => acc - t.amount, 0);
   const spentBudgetPercentage =
     budget.maximum === 0
