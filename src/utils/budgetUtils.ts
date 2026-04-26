@@ -1,14 +1,13 @@
 import { mockTransactions } from "../api/api";
 import type { Budget, BudgetStats } from "../types";
-
-const dateFictive: string = "2024-08-01";
+import { DATE_FICTIVE } from "../constants";
 
 export const calculateBudgetStats = (budget: Budget): BudgetStats => {
   const transactionsBudget = mockTransactions.filter(
     (t) => t.category.toLowerCase() === budget.category.toLowerCase(),
   );
   const spentBudget = transactionsBudget
-    .filter((t) => new Date(t.date) > new Date(dateFictive))
+    .filter((t) => new Date(t.date) > new Date(DATE_FICTIVE))
     .reduce((acc, t) => acc - t.amount, 0);
   const spentBudgetPercentage =
     budget.maximum === 0
