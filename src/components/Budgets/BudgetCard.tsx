@@ -88,10 +88,6 @@ export default function BudgetCard({ budget, stats }: BudgetCardProps) {
         <div className="bg-beige-50 p-5 rounded-xl">
           <div className="flex justify-between items-center">
             <span className="font3 text-grey-900">Latest Spending</span>
-            <button className="font4-regular items-center flex gap-3 text-grey-500 cursor-pointer">
-              See all
-              <IconChevronRight className="w-3 h-3" />
-            </button>
           </div>
           {latestSpending.slice(0, 3).map((l) => (
             <div
