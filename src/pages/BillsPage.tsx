@@ -31,8 +31,8 @@ export default function BillsPage() {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       if (sort === "a-z") return a.name.localeCompare(b.name);
       if (sort === "z-a") return b.name.localeCompare(a.name);
-      if (sort === "highest") return b.amount - a.amount;
-      if (sort === "lowest") return a.amount - b.amount;
+      if (sort === "highest") return Math.abs(b.amount) - Math.abs(a.amount);
+      if (sort === "lowest") return Math.abs(a.amount) - Math.abs(b.amount);
       return 0;
     });
 
