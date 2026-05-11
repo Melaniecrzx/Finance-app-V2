@@ -1,9 +1,43 @@
+import styled, { css } from "styled-components";
+
+type ButtonMode = "primary" | "secondary" | "destroy";
+
 interface ButtonProps extends React.PropsWithChildren {
-  mode?: "primary" | "destroy" | "secondary";
+  mode?: ButtonMode;
   className?: string;
   onClick?: React.MouseEventHandler;
   type?: "button" | "submit";
 }
+
+const StyledButton = styled.button<ButtonProps>`
+  padding: 1rem
+  cursor: pointer
+  border-radius: 8px
+  font4-bold
+
+
+  ${({ mode }) =>
+    mode === "primary" &&
+    css`
+      background: var(--color-grey-900);
+      color: white;
+      &:hover {
+        background: var(--color-grey-500);
+      }
+    `}
+   ${({ mode }) =>
+     mode === "secondary" &&
+     css`
+       background: var(--color-beige-50);
+     `}
+      ${({ mode }) =>
+        mode === "destroy" &&
+        css`
+     background: var(--color-red)
+     color: white
+  `}
+
+`;
 
 export default function Button({
   mode,
@@ -13,12 +47,13 @@ export default function Button({
   type,
 }: ButtonProps) {
   return (
-    <button
+    <StyledButton
       onClick={onClick}
       type={type}
-      className={`rounded-lg p-4 font4-bold cursor-pointer transition duration-150 ease-in-out ${mode === "primary" ? "bg-grey-900 hover:bg-grey-500  text-white" : mode === "destroy" ? "bg-red text-white" : "bg-beige-50"} ${className}`}
+      className={` ${className}`}
+      mode={mode}
     >
       {children}
-    </button>
+    </StyledButton>
   );
 }

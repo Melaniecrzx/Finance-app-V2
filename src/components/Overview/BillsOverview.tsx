@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import IconChevronRight from "../Icon/IconChevronRight";
-import { mockTransactions } from "../../api/api";
-import { DATE_FICTIVE } from "../../constants";
-import { paidBills, upcomingBills, dueSoonBills } from "../../utils/billsUtils";
+import { Link } from 'react-router-dom';
+import IconChevronRight from '../Icon/IconChevronRight';
+import { mockTransactions } from '../../api/api';
+import { DATE_FICTIVE } from '../../constants';
+import { paidBills, upcomingBills, dueSoonBills } from '../../utils/billsUtils';
 
 export default function BillsOverview() {
   const getMonthlyDate = (dateString: string, referenceDate: string): Date => {
@@ -37,8 +37,6 @@ export default function BillsOverview() {
       0,
     ),
   );
-
-  console.log(paidBillsTotal);
 
   return (
     <section className="bg-white rounded-xl px-5 py-6 md:p-8 flex flex-col gap-5 ">

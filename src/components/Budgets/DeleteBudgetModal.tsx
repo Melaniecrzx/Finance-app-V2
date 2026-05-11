@@ -1,8 +1,7 @@
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import type { Budget } from "../../types";
-import { useAppDispatch } from "../../app/hooks";
-import { deleteBudget } from "../../features/budget/budgetSlice";
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import type { Budget } from '../../types';
+import { useDeleteBudget } from '../../hooks/useBudgets';
 
 interface DeleteBudgetModalProps {
   deleteBudgetOpen: boolean;
@@ -15,7 +14,7 @@ export default function DeleteBudgetModal({
   setDeleteBudgetOpen,
   budget,
 }: DeleteBudgetModalProps) {
-  const dispatch = useAppDispatch();
+  const { mutate: deleteBudget } = useDeleteBudget();
 
   return (
     <Modal
@@ -31,7 +30,7 @@ export default function DeleteBudgetModal({
         <Button
           mode="destroy"
           onClick={() => {
-            dispatch(deleteBudget(budget.id));
+            deleteBudget(budget._id);
             setDeleteBudgetOpen(false);
           }}
         >

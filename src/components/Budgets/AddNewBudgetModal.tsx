@@ -1,24 +1,23 @@
-import { useState } from "react";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import IconDown from "../../assets/images/icon-caret-down.svg";
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import IconDown from '../../assets/images/icon-caret-down.svg';
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@headlessui/react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import type { Theme } from "../../types";
-import { addBudget } from "../../features/budget/budgetSlice";
+} from '@headlessui/react';
+import type { Theme } from '../../types';
+import { useCreateBudget, useBudgets } from '../../hooks/useBudgets';
 
 const themes: Theme[] = [
-  { id: 1, name: "Green", color: "#277C78" },
-  { id: 2, name: "Yellow", color: "#F2CDAC" },
-  { id: 3, name: "Cyan", color: "#82C9D7" },
-  { id: 4, name: "Navy", color: "#626070" },
-  { id: 5, name: "Red", color: "#C94736" },
-  { id: 6, name: "Purple", color: "#826CB0" },
+  { id: 1, name: 'Green', color: '#277C78' },
+  { id: 2, name: 'Yellow', color: '#F2CDAC' },
+  { id: 3, name: 'Cyan', color: '#82C9D7' },
+  { id: 4, name: 'Navy', color: '#626070' },
+  { id: 5, name: 'Red', color: '#C94736' },
+  { id: 6, name: 'Purple', color: '#826CB0' },
 ];
 interface AddNewBudgetModalProps {
   addNewBudgetOpen: boolean;
@@ -29,26 +28,23 @@ export default function AddNewBudgetModal({
   addNewBudgetOpen,
   setAddNewBudgetOpen,
 }: AddNewBudgetModalProps) {
-  const budgets = useAppSelector((state) => state.budgets.value);
+  const { data: budgets = [] } = useBudgets();
+  const { mutate: createBudget } = useCreateBudget();
   const categories = budgets.map((b) => b.category);
   const [form, setForm] = useState({
-    maximum: "",
+    maximum: '',
   });
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
-  const dispatch = useAppDispatch();
-
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newBuget = {
-      id: Date.now(),
+    createBudget({
       category: selectedCategory,
       maximum: Number(form.maximum),
       theme: selectedTheme.color,
-    };
-    dispatch(addBudget(newBuget));
-    setForm({ maximum: "" });
+    });
+    setForm({ maximum: '' });
     setSelectedTheme(themes[0]);
     setSelectedCategory(categories[0]);
     setAddNewBudgetOpen(false);
@@ -116,7 +112,7 @@ export default function AddNewBudgetModal({
                 <div
                   className="rounded-full h-4 w-4"
                   style={{ backgroundColor: selectedTheme.color }}
-                ></div>{" "}
+                ></div>{' '}
                 {selectedTheme.name}
               </div>
               <img src={IconDown} alt="icon down" />
@@ -131,7 +127,7 @@ export default function AddNewBudgetModal({
                   <div
                     className="rounded-full h-4 w-4"
                     style={{ backgroundColor: theme.color }}
-                  ></div>{" "}
+                  ></div>{' '}
                   {theme.name}
                 </ListboxOption>
               ))}

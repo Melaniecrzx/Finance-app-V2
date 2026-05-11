@@ -1,16 +1,15 @@
-import { useState } from "react";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import IconDown from "../../assets/images/icon-caret-down.svg";
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import IconDown from '../../assets/images/icon-caret-down.svg';
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@headlessui/react";
-import type { Pot, Theme } from "../../types";
-import { useAppDispatch } from "../../app/hooks";
-import { editPot } from "../../features/pot/potSlice";
+} from '@headlessui/react';
+import type { Pot, Theme } from '../../types';
+import { useEditPot } from '../../hooks/usePots';
 
 interface EditPotModalProps {
   editPotOpen: boolean;
@@ -23,21 +22,21 @@ export default function EditPotModal({
   setEditPotOpen,
   pot,
 }: EditPotModalProps) {
+  const { mutate: editPot } = useEditPot();
+
   const [form, setForm] = useState({
     name: pot.name,
     target: pot.target,
   });
 
   const themes: Theme[] = [
-    { id: 1, name: "Green", color: "#277C78" },
-    { id: 2, name: "Yellow", color: "#F2CDAC" },
-    { id: 3, name: "Cyan", color: "#82C9D7" },
-    { id: 4, name: "Navy", color: "#626070" },
-    { id: 5, name: "Red", color: "#C94736" },
-    { id: 6, name: "Purple", color: "#826CB0" },
+    { id: 1, name: 'Green', color: '#277C78' },
+    { id: 2, name: 'Yellow', color: '#F2CDAC' },
+    { id: 3, name: 'Cyan', color: '#82C9D7' },
+    { id: 4, name: 'Navy', color: '#626070' },
+    { id: 5, name: 'Red', color: '#C94736' },
+    { id: 6, name: 'Purple', color: '#826CB0' },
   ];
-
-  const dispatch = useAppDispatch();
 
   const [selectedTheme, setSelectedTheme] = useState(
     themes.find((t) => t.color === pot.theme) ?? themes[0],
@@ -47,15 +46,17 @@ export default function EditPotModal({
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedPot = {
-      id: pot.id,
-      name: form.name,
-      target: Number(form.target),
-      total: pot.total,
-      theme: selectedTheme.color,
-    };
-    dispatch(editPot(updatedPot));
-    setForm({ name: "", target: 0 });
+
+    editPot({
+      id: pot._id,
+      data: {
+        name: form.name,
+        target: Number(form.target),
+        total: pot.total,
+        theme: selectedTheme.color,
+      },
+    });
+    setForm({ name: '', target: 0 });
     setSelectedTheme(themes[0]);
     setEditPotOpen(false);
   };
@@ -116,7 +117,7 @@ export default function EditPotModal({
                 <div
                   className="rounded-full h-4 w-4"
                   style={{ backgroundColor: selectedTheme.color }}
-                ></div>{" "}
+                ></div>{' '}
                 {selectedTheme.name}
               </div>
               <img src={IconDown} alt="icon down" />
@@ -131,7 +132,7 @@ export default function EditPotModal({
                   <div
                     className="rounded-full h-4 w-4"
                     style={{ backgroundColor: theme.color }}
-                  ></div>{" "}
+                  ></div>{' '}
                   {theme.name}
                 </ListboxOption>
               ))}

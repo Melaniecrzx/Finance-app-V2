@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
-import IconChevronRight from "../Icon/IconChevronRight";
-import { Pie, PieChart, Cell, Tooltip } from "recharts";
-import { useAppSelector } from "../../app/hooks";
-import { calculateBudgetStats } from "../../utils/budgetUtils";
-import type { BudgetWithStats } from "../../types";
+import { Link } from 'react-router-dom';
+import IconChevronRight from '../Icon/IconChevronRight';
+import { Pie, PieChart, Cell, Tooltip } from 'recharts';
+import { useAppSelector } from '../../app/hooks';
+import { calculateBudgetStats } from '../../utils/budgetUtils';
+import type { BudgetWithStats } from '../../types';
+import { useBudgets } from '../../hooks/useBudgets';
 
 export default function BudgetsOverview() {
-  const budgets = useAppSelector((state) => state.budgets.value);
+  const { data: budgets = [] } = useBudgets();
 
   const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
     ...b,
@@ -33,7 +34,7 @@ export default function BudgetsOverview() {
           See Details
           <IconChevronRight className="w-3 h-3" />
         </Link>
-      </div>{" "}
+      </div>{' '}
       <div className=" flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
         <div className="relative flex items-center justify-center">
           <PieChart width={240} height={240}>
@@ -45,7 +46,7 @@ export default function BudgetsOverview() {
               stroke="none"
             >
               {budgets.map((budget) => (
-                <Cell key={budget.id} fill={budget.theme} fillOpacity={1} />
+                <Cell key={budget._id} fill={budget.theme} fillOpacity={1} />
               ))}
             </Pie>
             <Pie
@@ -56,7 +57,7 @@ export default function BudgetsOverview() {
               stroke="none"
             >
               {budgets.map((budget) => (
-                <Cell key={budget.id} fill={budget.theme} fillOpacity={0.7} />
+                <Cell key={budget._id} fill={budget.theme} fillOpacity={0.7} />
               ))}
             </Pie>
             <Tooltip />
@@ -73,7 +74,7 @@ export default function BudgetsOverview() {
 
         <div className="grid grid-cols-2 md:grid-cols-1  gap-4">
           {budgets.map((b) => (
-            <div key={b.id} className="flex gap-4">
+            <div key={b._id} className="flex gap-4">
               <div
                 className="rounded-lg h-10.75 w-2 items-center"
                 style={{ backgroundColor: b.theme }}

@@ -1,16 +1,15 @@
-import { useState } from "react";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import IconDown from "../../assets/images/icon-caret-down.svg";
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import IconDown from '../../assets/images/icon-caret-down.svg';
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@headlessui/react";
-import type { Budget, Theme } from "../../types";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { editBudget } from "../../features/budget/budgetSlice";
+} from '@headlessui/react';
+import type { Budget, Theme } from '../../types';
+import { useBudgets, useEditBudget } from '../../hooks/useBudgets';
 
 interface EditBudgetModalProps {
   editBudgetOpen: boolean;
@@ -23,19 +22,20 @@ export default function EditBudgetModal({
   setEditBudgetOpen,
   budget,
 }: EditBudgetModalProps) {
+  const { data: budgets = [] } = useBudgets();
+  const { mutate: editBudget } = useEditBudget();
+
   const [form, setForm] = useState<{ maximum: number }>({
     maximum: budget.maximum,
   });
   const themes: Theme[] = [
-    { id: 1, name: "Green", color: "#277C78" },
-    { id: 2, name: "Yellow", color: "#F2CDAC" },
-    { id: 3, name: "Cyan", color: "#82C9D7" },
-    { id: 4, name: "Navy", color: "#626070" },
-    { id: 5, name: "Red", color: "#C94736" },
-    { id: 6, name: "Purple", color: "#826CB0" },
+    { id: 1, name: 'Green', color: '#277C78' },
+    { id: 2, name: 'Yellow', color: '#F2CDAC' },
+    { id: 3, name: 'Cyan', color: '#82C9D7' },
+    { id: 4, name: 'Navy', color: '#626070' },
+    { id: 5, name: 'Red', color: '#C94736' },
+    { id: 6, name: 'Purple', color: '#826CB0' },
   ];
-
-  const budgets = useAppSelector((state) => state.budgets.value);
 
   const categories = budgets.map((b) => b.category);
 
@@ -47,17 +47,16 @@ export default function EditBudgetModal({
     themes.find((t) => t.color === budget.theme) ?? themes[0],
   );
 
-  const dispatch = useAppDispatch();
-
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedBudget = {
-      id: budget.id,
-      category: selectedCategory,
-      maximum: form.maximum,
-      theme: selectedTheme.color,
-    };
-    dispatch(editBudget(updatedBudget));
+    editBudget({
+      id: budget._id,
+      data: {
+        category: selectedCategory,
+        maximum: form.maximum,
+        theme: selectedTheme.color,
+      },
+    });
     setForm({ maximum: 0 });
     setSelectedCategory(categories[0]);
     setSelectedTheme(themes[0]);
@@ -72,7 +71,7 @@ export default function EditBudgetModal({
     >
       <div className="flex flex-col gap-5">
         <p className="font4-regular text-grey-500">
-          As your budgets change, feel free to update your spending limits.{" "}
+          As your budgets change, feel free to update your spending limits.{' '}
         </p>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
@@ -131,7 +130,7 @@ export default function EditBudgetModal({
                   <div
                     className="rounded-full h-4 w-4"
                     style={{ backgroundColor: selectedTheme.color }}
-                  ></div>{" "}
+                  ></div>{' '}
                   {selectedTheme.name}
                 </div>
                 <img src={IconDown} alt="icon down" />
@@ -146,7 +145,7 @@ export default function EditBudgetModal({
                     <div
                       className="rounded-full h-4 w-4"
                       style={{ backgroundColor: theme.color }}
-                    ></div>{" "}
+                    ></div>{' '}
                     {theme.name}
                   </ListboxOption>
                 ))}

@@ -1,31 +1,31 @@
 export type TransactionCategory =
-  | "Entertainment"
-  | "Bills"
-  | "Groceries"
-  | "Dining Out"
-  | "Transportation"
-  | "Personal Care"
-  | "General"
-  | "Lifestyle"
-  | "Shopping"
-  | "Education";
+  | 'Entertainment'
+  | 'Bills'
+  | 'Groceries'
+  | 'Dining Out'
+  | 'Transportation'
+  | 'Personal Care'
+  | 'General'
+  | 'Lifestyle'
+  | 'Shopping'
+  | 'Education';
 
 export type FilterCategory =
-  | "all"
-  | "entertainment"
-  | "bills"
-  | "groceries"
-  | "dining"
-  | "transportation"
-  | "personalCare";
+  | 'all'
+  | 'entertainment'
+  | 'bills'
+  | 'groceries'
+  | 'dining'
+  | 'transportation'
+  | 'personalCare';
 
 export type SortOption =
-  | "latest"
-  | "oldest"
-  | "a-z"
-  | "z-a"
-  | "highest"
-  | "lowest";
+  | 'latest'
+  | 'oldest'
+  | 'a-z'
+  | 'z-a'
+  | 'highest'
+  | 'lowest';
 
 export interface Transaction {
   id: number;
@@ -37,14 +37,14 @@ export interface Transaction {
   recurring: boolean;
 }
 
-export type ThemeName = "Green" | "Yellow" | "Cyan" | "Navy" | "Red" | "Purple";
+export type ThemeName = 'Green' | 'Yellow' | 'Cyan' | 'Navy' | 'Red' | 'Purple';
 export type ThemeColor =
-  | "#277C78"
-  | "#F2CDAC"
-  | "#82C9D7"
-  | "#626070"
-  | "#C94736"
-  | "#826CB0";
+  | '#277C78'
+  | '#F2CDAC'
+  | '#82C9D7'
+  | '#626070'
+  | '#C94736'
+  | '#826CB0';
 
 export interface Theme {
   id: number;
@@ -53,10 +53,11 @@ export interface Theme {
 }
 
 export type BudgetCategory =
-  | "Entertainment"
-  | "Bills"
-  | "Dining Out"
-  | "Personal Care";
+  | 'Entertainment'
+  | 'Bills'
+  | 'Dining Out'
+  | 'Personal Care'
+  | 'Education';
 
 export interface BudgetStats {
   spentBudget: number;
@@ -66,7 +67,7 @@ export interface BudgetStats {
 }
 
 export interface Budget {
-  id: number;
+  _id: string;
   category: BudgetCategory;
   maximum: number;
   theme: string;
@@ -75,7 +76,7 @@ export interface Budget {
 export interface BudgetWithStats extends Budget, BudgetStats {}
 
 export interface Pot {
-  id: number;
+  _id: string;
   name: string;
   target: number;
   total: number;

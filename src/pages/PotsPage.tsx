@@ -1,13 +1,13 @@
-import { useState } from "react";
-import PotsCard from "../components/Pots/PotsCard";
-import Button from "../components/ui/Button";
-import AddNewPot from "../components/Pots/AddNewPot";
-import { useAppSelector } from "../app/hooks";
+import { useState } from 'react';
+import PotsCard from '../components/Pots/PotsCard';
+import Button from '../components/ui/Button';
+import AddNewPot from '../components/Pots/AddNewPot';
+import { usePots } from '../hooks/usePots';
 
 export default function PotsPage() {
   const [addNewPotOpen, setAddNewPotOpen] = useState(false);
 
-  const pots = useAppSelector((state) => state.pots.value);
+  const { data: pots = [] } = usePots();
 
   return (
     <main className="py-8 px-4 mb-10 md:px-10 flex flex-col gap-8 overflow-hidden">
@@ -19,7 +19,7 @@ export default function PotsPage() {
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {pots.map((pot) => (
-          <PotsCard key={pot.id} pot={pot} />
+          <PotsCard key={pot._id} pot={pot} />
         ))}
       </div>
       <AddNewPot

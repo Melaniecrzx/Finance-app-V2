@@ -1,16 +1,15 @@
-import { useState } from "react";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import IconDown from "../../assets/images/icon-caret-down.svg";
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import IconDown from '../../assets/images/icon-caret-down.svg';
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-} from "@headlessui/react";
-import type { Theme } from "../../types";
-import { useAppDispatch } from "../../app/hooks";
-import { addPot } from "../../features/pot/potSlice";
+} from '@headlessui/react';
+import type { Theme } from '../../types';
+import { usePots, useCreatePot } from '../../hooks/usePots';
 
 interface AddNewPotProps {
   addNewPotOpen: boolean;
@@ -18,21 +17,21 @@ interface AddNewPotProps {
 }
 
 const themes: Theme[] = [
-  { id: 1, name: "Green", color: "#277C78" },
-  { id: 2, name: "Yellow", color: "#F2CDAC" },
-  { id: 3, name: "Cyan", color: "#82C9D7" },
-  { id: 4, name: "Navy", color: "#626070" },
-  { id: 5, name: "Red", color: "#C94736" },
-  { id: 6, name: "Purple", color: "#826CB0" },
+  { id: 1, name: 'Green', color: '#277C78' },
+  { id: 2, name: 'Yellow', color: '#F2CDAC' },
+  { id: 3, name: 'Cyan', color: '#82C9D7' },
+  { id: 4, name: 'Navy', color: '#626070' },
+  { id: 5, name: 'Red', color: '#C94736' },
+  { id: 6, name: 'Purple', color: '#826CB0' },
 ];
 
 export default function AddNewPot({
   addNewPotOpen,
   setAddNewPotOpen,
 }: AddNewPotProps) {
-  const [form, setForm] = useState({ name: "", target: "" });
+  const { mutate: createPot } = useCreatePot();
 
-  const dispatch = useAppDispatch();
+  const [form, setForm] = useState({ name: '', target: '' });
 
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
 
@@ -40,15 +39,14 @@ export default function AddNewPot({
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newPot = {
-      id: Date.now(),
+
+    createPot({
       name: form.name,
       target: Number(form.target),
       total: 0,
       theme: selectedTheme.color,
-    };
-    dispatch(addPot(newPot));
-    setForm({ name: "", target: "" });
+    });
+    setForm({ name: '', target: '' });
     setSelectedTheme(themes[0]);
     setAddNewPotOpen(false);
   };
@@ -112,7 +110,7 @@ export default function AddNewPot({
                 <div
                   className="rounded-full h-4 w-4"
                   style={{ backgroundColor: selectedTheme.color }}
-                ></div>{" "}
+                ></div>{' '}
                 {selectedTheme.name}
               </div>
               <img src={IconDown} alt="icon down" />
@@ -127,7 +125,7 @@ export default function AddNewPot({
                   <div
                     className="rounded-full h-4 w-4"
                     style={{ backgroundColor: theme.color }}
-                  ></div>{" "}
+                  ></div>{' '}
                   {theme.name}
                 </ListboxOption>
               ))}

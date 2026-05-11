@@ -1,21 +1,23 @@
-import BudgetSummary from "../components/Budgets/BudgetSummary.tsx";
-import BudgetCard from "../components/Budgets/BudgetCard.tsx";
-import Button from "../components/ui/Button.tsx";
-import { useState } from "react";
-import AddNewBudgetModal from "../components/Budgets/AddNewBudgetModal.tsx";
-import type { BudgetWithStats } from "../types";
-import { useAppSelector } from "../app/hooks.ts";
-import { calculateBudgetStats } from "../utils/budgetUtils.ts";
+import BudgetSummary from '../components/Budgets/BudgetSummary.tsx';
+import BudgetCard from '../components/Budgets/BudgetCard.tsx';
+import Button from '../components/ui/Button.tsx';
+import { useState } from 'react';
+import AddNewBudgetModal from '../components/Budgets/AddNewBudgetModal.tsx';
+import type { BudgetWithStats } from '../types';
+import { useBudgets } from '../hooks/useBudgets.ts';
+import { calculateBudgetStats } from '../utils/budgetUtils.ts';
 
 export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
 
-  const budgets = useAppSelector((state) => state.budgets.value);
+  const { data: budgets = [], isLoading } = useBudgets();
 
   const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
     ...b,
     ...calculateBudgetStats(b),
   }));
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <main className="py-8 px-4 mb-10 md:px-10 flex flex-col gap-8 w-full">
