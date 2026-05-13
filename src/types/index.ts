@@ -1,3 +1,9 @@
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+}
+
 export type TransactionCategory =
   | 'Entertainment'
   | 'Bills'
@@ -28,7 +34,7 @@ export type SortOption =
   | 'lowest';
 
 export interface Transaction {
-  id: number;
+  _id: number;
   avatar: string;
   name: string;
   category: TransactionCategory;

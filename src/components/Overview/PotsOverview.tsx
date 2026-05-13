@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import IconChevronRight from "../Icon/IconChevronRight.tsx";
-import IconPot from "../../assets/images/icon-pot.svg";
-import { useAppSelector } from "../../app/hooks.ts";
+import { Link } from 'react-router-dom';
+import IconChevronRight from '../Icon/IconChevronRight.tsx';
+import IconPot from '../../assets/images/icon-pot.svg';
+import { usePots } from '../../hooks/usePots.ts';
 
 export default function PotsOverview() {
-  const pots = useAppSelector((state) => state.pots.value);
+  const { data: pots = [] } = usePots();
 
   const totalSaved = pots.reduce((acc, p) => acc + p.total, 0);
 
@@ -30,7 +30,7 @@ export default function PotsOverview() {
         </div>
         <div className="grid grid-cols-2 gap-4 w-full">
           {pots.slice(0, 4).map((p) => (
-            <div key={p.id} className="flex gap-4 items-center">
+            <div key={p._id} className="flex gap-4 items-center">
               <div
                 className="rounded-lg w-1 h-10.75"
                 style={{ backgroundColor: p.theme }}

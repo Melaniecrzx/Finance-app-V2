@@ -1,7 +1,7 @@
-import IconRecurringBills from "../../assets/images/icon-recurring-bills.svg";
-import type { Transaction } from "../../types";
-import { DATE_FICTIVE } from "../../constants";
-import { paidBills, upcomingBills, dueSoonBills } from "../../utils/billsUtils";
+import IconRecurringBills from '../../assets/images/icon-recurring-bills.svg';
+import type { Transaction } from '../../types';
+import { DATE_FICTIVE } from '../../constants';
+import { paidBills, upcomingBills, dueSoonBills } from '../../utils/billsUtils';
 
 interface BillsSummaryProps {
   recurringBills: Transaction[];
@@ -22,8 +22,6 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
       0,
     ),
   ).toFixed(2);
-
-  console.log(paidBillsArr);
 
   const upcomingBillsTotal = Math.abs(
     upcomingBillsArr.reduce((acc, c) => acc + c.amount, 0),

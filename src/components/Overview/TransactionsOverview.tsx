@@ -1,8 +1,11 @@
-import { mockTransactions } from "../../api/api";
-import { Link } from "react-router-dom";
-import IconChevronRight from "../Icon/IconChevronRight";
+import { Link } from 'react-router-dom';
+import IconChevronRight from '../Icon/IconChevronRight';
+import { useOverview } from '../../hooks/useOverview';
+import type { Transaction } from '../../types';
 
 export default function TransactionsOverview() {
+  const { data: overview } = useOverview();
+
   return (
     <section className="bg-white rounded-xl px-5 pt-6 flex flex-col gap-5 ">
       <div className="flex justify-between items-center">
@@ -16,14 +19,14 @@ export default function TransactionsOverview() {
         </Link>
       </div>
       <div>
-        {mockTransactions.slice(0, 5).map((t) => (
+        {overview?.recentTransactions.map((t: Transaction) => (
           <div
-            key={t.id}
+            key={t._id}
             className="border-b border-grey-100 last:border-none p-5 flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
               <img
-                src={t.avatar}
+                src={t.avatar.replace('./assets/images/avatars', '/avatars')}
                 alt="Avatar"
                 className="w-10 h-10 rounded-full"
               />
@@ -31,15 +34,15 @@ export default function TransactionsOverview() {
             </div>
             <div className="flex flex-col gap-2 items-end">
               <span
-                className={`font4-bold ${t.amount > 0 ? "text-green" : "text-grey-900"}`}
+                className={`font4-bold ${t.amount > 0 ? 'text-green' : 'text-grey-900'}`}
               >
-                {t.amount > 0 ? "+" : ""}${Math.abs(t.amount).toFixed(2)}
-              </span>{" "}
+                {t.amount > 0 ? '+' : ''}${Math.abs(t.amount).toFixed(2)}
+              </span>{' '}
               <span className="font5-regular text-grey-500">
-                {new Date(t.date).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
+                {new Date(t.date).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
                 })}
               </span>
             </div>

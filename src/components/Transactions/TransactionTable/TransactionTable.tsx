@@ -1,5 +1,5 @@
-import type { Transaction } from "../../../types";
-import TransactionRow from "./TransactionRow";
+import type { Transaction } from '../../../types';
+import TransactionRow from './TransactionRow';
 
 interface TransactionTableProps {
   transactions: Transaction[];
@@ -26,7 +26,7 @@ export default function TransactionTable({
       </thead>
       <tbody>
         {transactions.length > 0 ? (
-          transactions.map((m) => <TransactionRow key={m.id} values={m} />)
+          transactions.map((m) => <TransactionRow key={m._id} values={m} />)
         ) : (
           <tr>
             <td colSpan={4} className="text-center font4-regular py-4">

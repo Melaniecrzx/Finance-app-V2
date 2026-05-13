@@ -1,5 +1,5 @@
-import { Pie, PieChart, Cell, Tooltip } from "recharts";
-import type { BudgetWithStats } from "../../types";
+import { Pie, PieChart, Cell, Tooltip } from 'recharts';
+import type { BudgetWithStats } from '../../types';
 
 interface BudgetSummaryProps {
   budgets: BudgetWithStats[];
@@ -21,7 +21,7 @@ export default function BudgetSummary({ budgets }: BudgetSummaryProps) {
             stroke="none"
           >
             {budgets.map((budget) => (
-              <Cell key={budget.id} fill={budget.theme} fillOpacity={1} />
+              <Cell key={budget._id} fill={budget.theme} fillOpacity={1} />
             ))}
           </Pie>
           <Pie
@@ -32,7 +32,7 @@ export default function BudgetSummary({ budgets }: BudgetSummaryProps) {
             stroke="none"
           >
             {budgets.map((budget) => (
-              <Cell key={budget.id} fill={budget.theme} fillOpacity={0.7} />
+              <Cell key={budget._id} fill={budget.theme} fillOpacity={0.7} />
             ))}
           </Pie>
           <Tooltip />
@@ -52,7 +52,7 @@ export default function BudgetSummary({ budgets }: BudgetSummaryProps) {
         <div>
           {budgets.map((b) => (
             <div
-              key={b.id}
+              key={b._id}
               className="border-b border-grey-100 items-center flex justify-between last:border-none py-4"
             >
               <div className="flex gap-4 items-center">

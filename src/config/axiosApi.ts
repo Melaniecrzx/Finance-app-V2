@@ -7,7 +7,6 @@ const authenticatedApi = axios.create({
   },
 });
 
-// Attach Authorization token to requests if present
 authenticatedApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('finance-app-token');
   if (token) {
