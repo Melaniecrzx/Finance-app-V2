@@ -9,7 +9,7 @@ import {
   ListboxOptions,
 } from '@headlessui/react';
 import type { Theme } from '../../types';
-import { usePots, useCreatePot } from '../../hooks/usePots';
+import { useCreatePot } from '../../hooks/usePots';
 
 interface AddNewPotProps {
   addNewPotOpen: boolean;

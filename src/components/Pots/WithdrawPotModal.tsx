@@ -1,9 +1,8 @@
-import { useState } from "react";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import type { Pot } from "../../types";
-import { withdrawMoney } from "../../features/pot/potSlice";
-import { useAppDispatch } from "../../app/hooks";
+import { useState } from 'react';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import type { Pot } from '../../types';
+import { useWithdraw } from '../../hooks/usePots';
 
 interface WithdrawPotModalProps {
   withdrawOpen: boolean;
@@ -16,10 +15,10 @@ export default function WithdrawPotModal({
   setWithdrawOpen,
   pot,
 }: WithdrawPotModalProps) {
-  const [amountToWithdraw, setAmountToWithdraw] = useState("");
-  const [error, setError] = useState("");
+  const { mutate: withdrawMoney } = useWithdraw();
 
-  const dispatch = useAppDispatch();
+  const [amountToWithdraw, setAmountToWithdraw] = useState('');
+  const [error, setError] = useState('');
 
   const newAmount = pot.total - Number(amountToWithdraw);
   const pourcentage = (
@@ -32,13 +31,13 @@ export default function WithdrawPotModal({
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (amountToWithdraw.trim() === "") return;
+    if (amountToWithdraw.trim() === '') return;
     if (Number(amountToWithdraw) > pot.total) {
       return;
     }
-    setError("");
-    dispatch(withdrawMoney({ id: pot.id, amount: Number(amountToWithdraw) }));
-    setAmountToWithdraw("");
+    setError('');
+    withdrawMoney({ id: pot._id, amount: Number(amountToWithdraw) });
+    setAmountToWithdraw('');
     setWithdrawOpen(false);
   };
 
@@ -62,7 +61,7 @@ export default function WithdrawPotModal({
           ></div>
           <div
             className="h-full rounded-r-sm"
-            style={{ width: `${newPourcentage}%`, backgroundColor: "#c94736" }}
+            style={{ width: `${newPourcentage}%`, backgroundColor: '#c94736' }}
           ></div>
         </div>
         <div className="flex justify-between">
@@ -83,9 +82,9 @@ export default function WithdrawPotModal({
                 onChange={(e) => {
                   setAmountToWithdraw(e.target.value);
                   if (Number(e.target.value) > pot.total) {
-                    setError("Amount exceeds total saved");
+                    setError('Amount exceeds total saved');
                   } else {
-                    setError("");
+                    setError('');
                   }
                 }}
                 id="amountToAdd"

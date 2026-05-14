@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authenticatedApi } from '../config/axiosApi';
 import type { Budget } from '../types';
+import toast from 'react-hot-toast';
 
 const getBudgets = async (): Promise<Budget[]> => {
   const { data } = await authenticatedApi.get('/budgets');
@@ -21,6 +22,10 @@ export const useCreateBudget = () => {
       authenticatedApi.post('/budgets', budget),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      toast.success('Budget created!');
+    },
+    onError: () => {
+      toast.error('Something went wrong.');
     },
   });
 };
@@ -33,6 +38,10 @@ export const useEditBudget = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      toast.success('Budget updated!');
+    },
+    onError: () => {
+      toast.error('Something went wrong.');
     },
   });
 };
@@ -45,6 +54,10 @@ export const useDeleteBudget = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      toast.success('Budget deleted!');
+    },
+    onError: () => {
+      toast.error('Something went wrong.');
     },
   });
 };

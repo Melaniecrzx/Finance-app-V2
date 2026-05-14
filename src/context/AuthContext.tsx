@@ -1,5 +1,6 @@
 import { useContext, createContext, useState } from 'react';
 import type { User } from '../types/index';
+import toast from 'react-hot-toast';
 
 interface AuthContextType {
   user: User | null;
@@ -19,12 +20,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('finance-app-token', token);
     setToken(token);
     setUser(user);
+    toast.success('Welcome back!');
   };
 
   const logout = () => {
     localStorage.removeItem('finance-app-token');
     setToken(null);
     setUser(null);
+    toast.success('Logged out successfully');
   };
 
   return (

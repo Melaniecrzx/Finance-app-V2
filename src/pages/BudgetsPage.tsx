@@ -31,7 +31,11 @@ export default function BudgetsPage() {
         <BudgetSummary budgets={budgetsWithStats} />
         <div className="flex flex-col gap-6 flex-1 min-w-0">
           {budgets.map((m) => (
-            <BudgetCard key={m.id} budget={m} stats={calculateBudgetStats(m)} />
+            <BudgetCard
+              key={m._id}
+              budget={m}
+              stats={calculateBudgetStats(m)}
+            />
           ))}
         </div>
       </div>

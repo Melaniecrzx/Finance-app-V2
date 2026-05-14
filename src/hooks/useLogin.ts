@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.tsx';
 import { authenticatedApi } from '../config/axiosApi';
 import { useNavigate } from 'react-router-dom';
 

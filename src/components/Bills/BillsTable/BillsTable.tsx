@@ -1,5 +1,5 @@
-import type { Transaction } from "../../../types";
-import BillsRow from "./BillsRow";
+import type { Transaction } from '../../../types';
+import BillsRow from './BillsRow';
 
 interface BillsTableProps {
   recurringBills: Transaction[];
@@ -21,7 +21,7 @@ export default function BillsTable({ recurringBills }: BillsTableProps) {
       </thead>
       <tbody>
         {recurringBills.length > 0 ? (
-          recurringBills.map((m) => <BillsRow key={m.id} recurringBill={m} />)
+          recurringBills.map((m) => <BillsRow key={m._id} recurringBill={m} />)
         ) : (
           <tr>
             <td colSpan={4} className="text-center font4-regular py-4">

@@ -2,6 +2,7 @@ import IconRecurringBills from '../../assets/images/icon-recurring-bills.svg';
 import type { Transaction } from '../../types';
 import { DATE_FICTIVE } from '../../constants';
 import { paidBills, upcomingBills, dueSoonBills } from '../../utils/billsUtils';
+import { useBills } from '../../hooks/useBills';
 
 interface BillsSummaryProps {
   recurringBills: Transaction[];

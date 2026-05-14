@@ -1,38 +1,27 @@
-import BillsSummary from "../components/Bills/BillsSummary";
-import BillsTable from "../components/Bills/BillsTable/BillsTable";
-import { mockTransactions } from "../api/api";
-import { useState } from "react";
-import type { SortOption } from "../types/index";
-import BillsHeader from "../components/Bills/BillsHeader";
-import { DATE_FICTIVE } from "../constants";
+import BillsSummary from '../components/Bills/BillsSummary';
+import BillsTable from '../components/Bills/BillsTable/BillsTable';
+import { useState } from 'react';
+import type { SortOption } from '../types/index';
+import BillsHeader from '../components/Bills/BillsHeader';
+import { useBills } from '../hooks/useBills';
 
 export default function BillsPage() {
-  const getMonthlyDate = (dateString: string, referenceDate: string): Date => {
-    const day = new Date(dateString).getDate();
-    const ref = new Date(referenceDate);
-    return new Date(ref.getFullYear(), ref.getMonth(), day);
-  };
-  const recurringBills = mockTransactions
-    .filter((m) => m.recurring)
-    .map((b) => ({
-      ...b,
-      date: getMonthlyDate(b.date, DATE_FICTIVE).toISOString(),
-    }));
+  const { data: bills = [] } = useBills();
 
-  const [searchInput, setSearchInput] = useState<string>("");
-  const [sort, setSort] = useState<SortOption>("latest");
+  const [searchInput, setSearchInput] = useState<string>('');
+  const [sort, setSort] = useState<SortOption>('latest');
 
-  const sortBills = [...recurringBills]
+  const sortBills = [...bills]
     .filter((m) => m.name.toLowerCase().includes(searchInput.toLowerCase()))
     .sort((a, b) => {
-      if (sort === "latest")
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      if (sort === "oldest")
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      if (sort === "a-z") return a.name.localeCompare(b.name);
-      if (sort === "z-a") return b.name.localeCompare(a.name);
-      if (sort === "highest") return Math.abs(b.amount) - Math.abs(a.amount);
-      if (sort === "lowest") return Math.abs(a.amount) - Math.abs(b.amount);
+      if (sort === 'latest')
+        return new Date(b.date).getDate() - new Date(a.date).getDate();
+      if (sort === 'oldest')
+        return new Date(a.date).getDate() - new Date(b.date).getDate();
+      if (sort === 'a-z') return a.name.localeCompare(b.name);
+      if (sort === 'z-a') return b.name.localeCompare(a.name);
+      if (sort === 'highest') return Math.abs(b.amount) - Math.abs(a.amount);
+      if (sort === 'lowest') return Math.abs(a.amount) - Math.abs(b.amount);
       return 0;
     });
 

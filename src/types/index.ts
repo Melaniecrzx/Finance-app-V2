@@ -41,6 +41,7 @@ export interface Transaction {
   date: string;
   amount: number;
   recurring: boolean;
+  status?: 'paid' | 'due-soon' | 'upcoming';
 }
 
 export type ThemeName = 'Green' | 'Yellow' | 'Cyan' | 'Navy' | 'Red' | 'Purple';
