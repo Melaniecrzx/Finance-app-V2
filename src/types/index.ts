@@ -34,7 +34,8 @@ export type SortOption =
   | 'lowest';
 
 export interface Transaction {
-  _id: number;
+  _id: string;
+  id?: number;
   avatar: string;
   name: string;
   category: TransactionCategory;
