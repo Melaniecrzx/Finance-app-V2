@@ -1,9 +1,9 @@
-import IconEllipsis from "../Icon/IconEllipsis.tsx";
-import MenuDropdown from "../ui/MenuDropdown.tsx";
-import { useState } from "react";
-import EditBudgetModal from "./EditBudgetModal.tsx";
-import DeleteBudgetModal from "./DeleteBudgetModal.tsx";
-import type { Budget, BudgetStats, DropdownLink } from "../../types";
+import IconEllipsis from '../Icon/IconEllipsis.tsx';
+import MenuDropdown from '../ui/MenuDropdown.tsx';
+import { useState } from 'react';
+import EditBudgetModal from './EditBudgetModal.tsx';
+import DeleteBudgetModal from './DeleteBudgetModal.tsx';
+import type { Budget, BudgetStats, DropdownLink } from '../../types';
 
 interface BudgetCardProps {
   budget: Budget;
@@ -25,14 +25,14 @@ export default function BudgetCard({ budget, stats }: BudgetCardProps) {
     {
       id: 1,
       onClick: () => setEditBudgetOpen(true),
-      label: "Edit Budget",
-      className: "text-grey-900",
+      label: 'Edit Budget',
+      className: 'text-grey-900',
     },
     {
       id: 2,
       onClick: () => setDeleteBudgetOpen(true),
-      label: "Delete Budget",
-      className: "text-red",
+      label: 'Delete Budget',
+      className: 'text-red',
     },
   ];
 
@@ -88,7 +88,7 @@ export default function BudgetCard({ budget, stats }: BudgetCardProps) {
           <div className="flex justify-between items-center">
             <span className="font3 text-grey-900">Latest Spending</span>
           </div>
-          {latestSpending.slice(0, 3).map((l) => (
+          {latestSpending?.slice(0, 3).map((l) => (
             <div
               key={l.id}
               className="border-b border-grey-300 last:border-none flex items-center justify-between py-3"
@@ -106,12 +106,12 @@ export default function BudgetCard({ budget, stats }: BudgetCardProps) {
                   -${Math.abs(l.amount).toFixed(2)}
                 </span>
                 <span className="font5-regular text-grey-500">
-                  {new Date(l.date).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
+                  {new Date(l.date).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
                   })}
-                </span>{" "}
+                </span>{' '}
               </div>
             </div>
           ))}
