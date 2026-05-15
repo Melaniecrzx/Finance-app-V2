@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import IconChevronRight from '../Icon/IconChevronRight.tsx';
 import IconPot from '../../assets/images/icon-pot.svg';
 import { usePots } from '../../hooks/usePots.ts';
+import EmptyState from '../ui/EmptyState.tsx';
 
 export default function PotsOverview() {
   const { data: pots = [] } = usePots();
@@ -20,29 +21,39 @@ export default function PotsOverview() {
           <IconChevronRight className="w-3 h-3" />
         </Link>
       </div>
-      <div className="flex flex-col md:flex-row gap-5 items-center">
-        <div className="flex gap-4 items-center bg-beige-50 rounded-xl p-4 w-full md:w-80">
-          <img src={IconPot} alt="Icon Pot" />
-          <div className="flex flex-col gap-2.75">
-            <span className="font4-regular text-grey-500">Total Saved</span>
-            <span className="font1 text-grey-900">${totalSaved}</span>
+      {pots.length > 0 ? (
+        <div className="flex flex-col md:flex-row gap-5 items-center">
+          <div className="flex gap-4 items-center bg-beige-50 rounded-xl p-4 w-full md:w-80">
+            <img src={IconPot} alt="Icon Pot" />
+            <div className="flex flex-col gap-2.75">
+              <span className="font4-regular text-grey-500">Total Saved</span>
+              <span className="font1 text-grey-900">${totalSaved}</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 w-full">
+            {pots.slice(0, 4).map((p) => (
+              <div key={p._id} className="flex gap-4 items-center">
+                <div
+                  className="rounded-lg w-1 h-10.75"
+                  style={{ backgroundColor: p.theme }}
+                ></div>
+                <div className="flex flex-col gap-2">
+                  <span className="font5-regular text-grey-500">{p.name}</span>
+                  <span className="font4-bold text-grey-900">${p.total}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 w-full">
-          {pots.slice(0, 4).map((p) => (
-            <div key={p._id} className="flex gap-4 items-center">
-              <div
-                className="rounded-lg w-1 h-10.75"
-                style={{ backgroundColor: p.theme }}
-              ></div>
-              <div className="flex flex-col gap-2">
-                <span className="font5-regular text-grey-500">{p.name}</span>
-                <span className="font4-bold text-grey-900">${p.total}</span>
-              </div>
-            </div>
-          ))}
+      ) : (
+        <div className="flex justify-center h-screen items-center flex-1">
+          <EmptyState
+            emoji="🐖"
+            title="No pots found"
+            description="Start your saving journey by creating your first pot!"
+          />
         </div>
-      </div>
+      )}
     </section>
   );
 }

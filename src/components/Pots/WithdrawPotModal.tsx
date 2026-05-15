@@ -78,6 +78,8 @@ export default function WithdrawPotModal({
             <div className="w-full border border-beige-500 px-5 py-3 rounded-lg flex items-center gap-4">
               <span className="text-beige-500">$</span>
               <input
+                autoComplete="off"
+                autoFocus
                 value={amountToWithdraw}
                 onChange={(e) => {
                   setAmountToWithdraw(e.target.value);

@@ -110,6 +110,8 @@ export default function EditBudgetModal({
                 <span className="text-beige-500 font-4-regular">$</span>
                 <input
                   id="maximum"
+                  autoComplete="off"
+                  autoFocus
                   value={form.maximum}
                   onChange={(e) =>
                     setForm({ ...form, maximum: Number(e.target.value) })

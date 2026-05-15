@@ -1,8 +1,5 @@
 import IconRecurringBills from '../../assets/images/icon-recurring-bills.svg';
 import type { Transaction } from '../../types';
-import { DATE_FICTIVE } from '../../constants';
-import { paidBills, upcomingBills, dueSoonBills } from '../../utils/billsUtils';
-import { useBills } from '../../hooks/useBills';
 
 interface BillsSummaryProps {
   recurringBills: Transaction[];
@@ -13,23 +10,22 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
     recurringBills.reduce((acc, c) => acc + c.amount, 0) / -1
   ).toFixed(2);
 
-  const paidBillsArr = paidBills(recurringBills, DATE_FICTIVE);
-  const upcomingBillsArr = upcomingBills(recurringBills, DATE_FICTIVE);
-  const dueSoonBillsArr = dueSoonBills(recurringBills, DATE_FICTIVE);
+  const paidBillsArr = recurringBills.filter((r) => r.status === 'paid');
+  const dueSoonBillsArr = recurringBills.filter((r) => r.status === 'due-soon');
+  const upcomingBillsArr = recurringBills.filter(
+    (r) => r.status === 'upcoming',
+  );
 
   const paidBillsTotal = Math.abs(
-    paidBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ),
-  ).toFixed(2);
-
-  const upcomingBillsTotal = Math.abs(
-    upcomingBillsArr.reduce((acc, c) => acc + c.amount, 0),
-  ).toFixed(2);
+    paidBillsArr.reduce((acc, p) => acc + p.amount, 0),
+  );
 
   const dueSoonBillsTotal = Math.abs(
-    dueSoonBillsArr.reduce((acc, c) => acc + c.amount, 0),
+    dueSoonBillsArr.reduce((acc, p) => acc + p.amount, 0),
+  );
+
+  const upcomingBillsTotal = Math.abs(
+    upcomingBillsArr.reduce((acc, p) => acc + p.amount, 0),
   );
 
   return (
@@ -59,7 +55,7 @@ export default function BillsSummary({ recurringBills }: BillsSummaryProps) {
               Upcoming Bills
             </span>
             <span className="font5-bold text-grey-900">
-              {upcomingBillsArr.length} (${upcomingBillsTotal})
+              {upcomingBillsArr.length} (${upcomingBillsTotal.toFixed(2)})
             </span>
           </div>
           <div className="flex justify-between pt-3">

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PotsCard from '../components/Pots/PotsCard';
 import Button from '../components/ui/Button';
 import AddNewPot from '../components/Pots/AddNewPot';
+import EmptyState from '../components/ui/EmptyState';
 import { usePots } from '../hooks/usePots';
 
 export default function PotsPage() {
@@ -17,11 +18,24 @@ export default function PotsPage() {
           + Add New Pot
         </Button>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {pots.map((pot) => (
-          <PotsCard key={pot._id} pot={pot} />
-        ))}
-      </div>
+      {pots.length > 0 ? (
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {pots.map((pot) => (
+            <PotsCard key={pot._id} pot={pot} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center h-screen items-center flex-1">
+          <EmptyState
+            emoji="🐖"
+            title="No pots found"
+            description="Start your saving journey by creating your first pot!"
+            buttonLabel="+ Add New Pot"
+            onClick={() => setAddNewPotOpen(true)}
+          />
+        </div>
+      )}
+
       <AddNewPot
         addNewPotOpen={addNewPotOpen}
         setAddNewPotOpen={setAddNewPotOpen}

@@ -5,6 +5,7 @@ import TransactionPagination from '../components/Transactions/TransactionPaginat
 import { useTransactions } from '../hooks/useTransactions';
 import { useDebounce } from '../hooks/useDebounce';
 import type { FilterCategory, SortOption } from '../types/index';
+import { ClipLoader } from 'react-spinners';
 
 export default function TransactionPage() {
   const [searchInput, setSearchInput] = useState<string>('');
@@ -23,8 +24,12 @@ export default function TransactionPage() {
 
   const transactions = data?.data?.transactions ?? [];
   const total = data?.total ?? 0;
-  if (isLoading) return <div>Loading...</div>;
-
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <ClipLoader color="#277c78" size={35} />
+      </div>
+    );
   return (
     <main className="py-8 mb-10 px-4 md:px-10 flex flex-col gap-8 overflow-hidden">
       <h1 className="font1 text-grey-900">Transactions</h1>

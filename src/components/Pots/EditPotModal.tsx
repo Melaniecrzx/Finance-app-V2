@@ -78,6 +78,7 @@ export default function EditPotModal({
             </label>
             <div className="border border-beige-500 rounded-lg py-3 px-5">
               <input
+                autoComplete="off"
                 id="potName"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -95,6 +96,7 @@ export default function EditPotModal({
             <div className="border border-beige-500 rounded-lg py-3 px-5 flex items-center gap-3">
               <span className="text-beige-500 font-4-regular">$</span>
               <input
+                autoComplete="off"
                 id="target"
                 value={form.target}
                 onChange={(e) =>

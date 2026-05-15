@@ -64,7 +64,12 @@ export type BudgetCategory =
   | 'Bills'
   | 'Dining Out'
   | 'Personal Care'
-  | 'Education';
+  | 'Education'
+  | 'Groceries'
+  | 'Transportation'
+  | 'Lifestyle'
+  | 'Shopping'
+  | 'General';
 
 export interface BudgetStats {
   spentBudget: number;

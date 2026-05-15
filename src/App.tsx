@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ClipLoader } from 'react-spinners';
 import ProtectedRoute from './components/Authentification/ProtectedRoute.tsx';
+import { AuthProvider } from './context/AuthContext.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
   {
     path: '/auth',
     element: (
-      <Suspense fallback={<p>Chargement...</p>}>
+      <Suspense fallback={<ClipLoader color="#277c78" size={35} />}>
         <AuthPage />
       </Suspense>
     ),
@@ -55,7 +56,9 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -1,41 +1,25 @@
 import { Link } from 'react-router-dom';
 import IconChevronRight from '../Icon/IconChevronRight';
-import { mockTransactions } from '../../api/api';
-import { DATE_FICTIVE } from '../../constants';
-import { paidBills, upcomingBills, dueSoonBills } from '../../utils/billsUtils';
+import EmptyState from '../ui/EmptyState';
+import { useBills } from '../../hooks/useBills';
 
 export default function BillsOverview() {
-  const getMonthlyDate = (dateString: string, referenceDate: string): Date => {
-    const day = new Date(dateString).getDate();
-    const ref = new Date(referenceDate);
-    return new Date(ref.getFullYear(), ref.getMonth(), day);
-  };
-  const recurringBills = mockTransactions
-    .filter((m) => m.recurring)
-    .map((b) => ({
-      ...b,
-      date: getMonthlyDate(b.date, DATE_FICTIVE).toISOString(),
-    }));
+  const { data: bills = [] } = useBills();
+
+  const paidBillsArr = bills.filter((r) => r.status === 'paid');
+  const dueSoonBillsArr = bills.filter((r) => r.status === 'due-soon');
+  const upcomingBillsArr = bills.filter((r) => r.status === 'upcoming');
 
   const paidBillsTotal = Math.abs(
-    paidBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ),
-  );
-
-  const upcomingBillsTotal = Math.abs(
-    upcomingBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ),
+    paidBillsArr.reduce((acc, p) => acc + p.amount, 0),
   );
 
   const dueSoonBillsTotal = Math.abs(
-    dueSoonBills(recurringBills, DATE_FICTIVE).reduce(
-      (acc, c) => acc + c.amount,
-      0,
-    ),
+    dueSoonBillsArr.reduce((acc, p) => acc + p.amount, 0),
+  );
+
+  const upcomingBillsTotal = Math.abs(
+    upcomingBillsArr.reduce((acc, p) => acc + p.amount, 0),
   );
 
   return (
@@ -50,36 +34,50 @@ export default function BillsOverview() {
           <IconChevronRight className="w-3 h-3" />
         </Link>
       </div>
-      <div className="flex flex-col gap-3">
-        <div className="flex rounded-lg overflow-hidden">
-          <div className="w-1 bg-green shrink-0" />
-          <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
-            <span className="font4-regular text-grey-500">Paid Bills</span>
-            <span className="font4-bold text-grey-900">
-              ${paidBillsTotal.toFixed(2)}
-            </span>
+      {bills.length > 0 ? (
+        <div className="flex flex-col gap-3">
+          <div className="flex rounded-lg overflow-hidden">
+            <div className="w-1 bg-green shrink-0" />
+            <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
+              <span className="font4-regular text-grey-500">Paid Bills</span>
+              <span className="font4-bold text-grey-900">
+                ${paidBillsTotal.toFixed(2)}
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className="flex rounded-lg overflow-hidden">
-          <div className="w-1 bg-yellow shrink-0" />
-          <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
-            <span className="font4-regular text-grey-500">Upcoming Bills</span>
-            <span className="font4-bold text-grey-900">
-              ${upcomingBillsTotal.toFixed(2)}
-            </span>
+          <div className="flex rounded-lg overflow-hidden">
+            <div className="w-1 bg-yellow shrink-0" />
+            <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
+              <span className="font4-regular text-grey-500">
+                Upcoming Bills
+              </span>
+              <span className="font4-bold text-grey-900">
+                ${upcomingBillsTotal.toFixed(2)}
+              </span>
+            </div>
+          </div>
+          <div className="flex rounded-lg overflow-hidden">
+            <div className="w-1 bg-cyan shrink-0" />
+            <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
+              <span className="font4-regular text-grey-500">
+                Due Soon Bills
+              </span>
+              <span className="font4-bold text-grey-900">
+                ${dueSoonBillsTotal.toFixed(2)}
+              </span>
+            </div>
           </div>
         </div>
-        <div className="flex rounded-lg overflow-hidden">
-          <div className="w-1 bg-cyan shrink-0" />
-          <div className="flex justify-between items-center bg-beige-50 py-5 px-4 flex-1">
-            <span className="font4-regular text-grey-500">Due Soon Bills</span>
-            <span className="font4-bold text-grey-900">
-              ${dueSoonBillsTotal.toFixed(2)}
-            </span>
-          </div>
+      ) : (
+        <div className="flex justify-center h-screen items-center flex-1">
+          <EmptyState
+            emoji="📅"
+            title="No recurring bills"
+            description="Your recurring bills will appear here."
+          />
         </div>
-      </div>
+      )}
     </section>
   );
 }

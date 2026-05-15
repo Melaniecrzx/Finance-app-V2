@@ -4,10 +4,16 @@ import TransactionsOverview from '../components/Overview/TransactionsOverview.ts
 import BillsOverview from '../components/Overview/BillsOverview.tsx';
 import BudgetsOverview from '../components/Overview/BudgetsOverview.tsx';
 import { useOverview } from '../hooks/useOverview.ts';
+import { ClipLoader } from 'react-spinners';
 
 export default function OverviewPage() {
   const { data: overview, isLoading } = useOverview();
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <ClipLoader color="#277c78" size={35} />
+      </div>
+    );
   return (
     <main className="py-8 px-4 mb-10 md:px-10 w-full flex flex-col gap-8">
       <h1 className="font1 text-grey-900">Overview</h1>

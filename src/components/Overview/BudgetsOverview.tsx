@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import IconChevronRight from '../Icon/IconChevronRight';
 import { Pie, PieChart, Cell, Tooltip } from 'recharts';
-import { useAppSelector } from '../../app/hooks';
 import { calculateBudgetStats } from '../../utils/budgetUtils';
 import type { BudgetWithStats } from '../../types';
 import { useBudgets } from '../../hooks/useBudgets';
+import EmptyState from '../ui/EmptyState';
 
 export default function BudgetsOverview() {
   const { data: budgets = [] } = useBudgets();
@@ -35,62 +35,76 @@ export default function BudgetsOverview() {
           <IconChevronRight className="w-3 h-3" />
         </Link>
       </div>{' '}
-      <div className=" flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
-        <div className="relative flex items-center justify-center">
-          <PieChart width={240} height={240}>
-            <Pie
-              data={budgets}
-              dataKey="maximum"
-              innerRadius={90}
-              outerRadius={120}
-              stroke="none"
-            >
-              {budgets.map((budget) => (
-                <Cell key={budget._id} fill={budget.theme} fillOpacity={1} />
-              ))}
-            </Pie>
-            <Pie
-              data={budgets}
-              dataKey="maximum"
-              innerRadius={75}
-              outerRadius={90}
-              stroke="none"
-            >
-              {budgets.map((budget) => (
-                <Cell key={budget._id} fill={budget.theme} fillOpacity={0.7} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-          <div className="absolute flex flex-col gap-1 items-center">
-            <span className="font1 text-grey-900">
-              ${spentBudgetTotal.toFixed(2)}
-            </span>
-            <span className="font5-regular text-grey-500">
-              of ${maximumBudgetTotal} limit
-            </span>
+      {budgets.length > 0 ? (
+        <div className=" flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
+          <div className="relative flex items-center justify-center">
+            <PieChart width={240} height={240}>
+              <Pie
+                data={budgets}
+                dataKey="maximum"
+                innerRadius={90}
+                outerRadius={120}
+                stroke="none"
+              >
+                {budgets.map((budget) => (
+                  <Cell key={budget._id} fill={budget.theme} fillOpacity={1} />
+                ))}
+              </Pie>
+              <Pie
+                data={budgets}
+                dataKey="maximum"
+                innerRadius={75}
+                outerRadius={90}
+                stroke="none"
+              >
+                {budgets.map((budget) => (
+                  <Cell
+                    key={budget._id}
+                    fill={budget.theme}
+                    fillOpacity={0.7}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+            <div className="absolute flex flex-col gap-1 items-center">
+              <span className="font1 text-grey-900">
+                ${spentBudgetTotal.toFixed(2)}
+              </span>
+              <span className="font5-regular text-grey-500">
+                of ${maximumBudgetTotal} limit
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-1  gap-4">
+            {budgets.map((b) => (
+              <div key={b._id} className="flex gap-4">
+                <div
+                  className="rounded-lg h-10.75 w-2 items-center"
+                  style={{ backgroundColor: b.theme }}
+                ></div>
+                <div className="flex flex-col gap-2">
+                  <span className="text-grey-500 font5-regular">
+                    {b.category}
+                  </span>
+                  <span className="text-grey-900 font4-bold">
+                    ${b.maximum.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-1  gap-4">
-          {budgets.map((b) => (
-            <div key={b._id} className="flex gap-4">
-              <div
-                className="rounded-lg h-10.75 w-2 items-center"
-                style={{ backgroundColor: b.theme }}
-              ></div>
-              <div className="flex flex-col gap-2">
-                <span className="text-grey-500 font5-regular">
-                  {b.category}
-                </span>
-                <span className="text-grey-900 font4-bold">
-                  ${b.maximum.toFixed(2)}
-                </span>
-              </div>
-            </div>
-          ))}
+      ) : (
+        <div className="flex justify-center h-screen items-center flex-1">
+          <EmptyState
+            emoji="💰"
+            title="No budgets created"
+            description="It looks like you don't have any budgets setup. Create a budget to keep your spending on track."
+          />
         </div>
-      </div>
+      )}
     </section>
   );
 }

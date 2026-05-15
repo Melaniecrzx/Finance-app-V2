@@ -4,9 +4,10 @@ import { useState } from 'react';
 import type { SortOption } from '../types/index';
 import BillsHeader from '../components/Bills/BillsHeader';
 import { useBills } from '../hooks/useBills';
+import { ClipLoader } from 'react-spinners';
 
 export default function BillsPage() {
-  const { data: bills = [] } = useBills();
+  const { data: bills = [], isLoading } = useBills();
 
   const [searchInput, setSearchInput] = useState<string>('');
   const [sort, setSort] = useState<SortOption>('latest');
@@ -24,6 +25,13 @@ export default function BillsPage() {
       if (sort === 'lowest') return Math.abs(a.amount) - Math.abs(b.amount);
       return 0;
     });
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <ClipLoader color="#277c78" size={35} />
+      </div>
+    );
 
   return (
     <main className="py-8 px-4 md:px-10 flex flex-col gap-8 mb-20">

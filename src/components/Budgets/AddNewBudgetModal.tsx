@@ -10,6 +10,7 @@ import {
 } from '@headlessui/react';
 import type { Theme } from '../../types';
 import { useCreateBudget, useBudgets } from '../../hooks/useBudgets';
+import type { BudgetCategory } from '../../types';
 
 const themes: Theme[] = [
   { id: 1, name: 'Green', color: '#277C78' },
@@ -30,12 +31,31 @@ export default function AddNewBudgetModal({
 }: AddNewBudgetModalProps) {
   const { data: budgets = [] } = useBudgets();
   const { mutate: createBudget } = useCreateBudget();
-  const categories = budgets.map((b) => b.category);
+
+  const allCategories: BudgetCategory[] = [
+    'Entertainment',
+    'Bills',
+    'Dining Out',
+    'Personal Care',
+    'Groceries',
+    'Transportation',
+    'Lifestyle',
+    'Shopping',
+    'General',
+    'Education',
+  ];
+
+  const availableCategories = allCategories.filter(
+    (c) => !budgets.some((b) => b.category === c),
+  );
+
   const [form, setForm] = useState({
     maximum: '',
   });
   const [selectedTheme, setSelectedTheme] = useState(themes[0]);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    availableCategories[0],
+  );
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +66,7 @@ export default function AddNewBudgetModal({
     });
     setForm({ maximum: '' });
     setSelectedTheme(themes[0]);
-    setSelectedCategory(categories[0]);
+    setSelectedCategory(availableCategories[0]);
     setAddNewBudgetOpen(false);
   };
 
@@ -74,7 +94,7 @@ export default function AddNewBudgetModal({
               <img src={IconDown} alt="icon down" />
             </ListboxButton>
             <ListboxOptions className="bg-white  rounded-lg border border-beige-500 mt-1 w-(--button-width) overflow-hidden">
-              {categories.map((c) => (
+              {allCategories.map((c) => (
                 <ListboxOption
                   key={c}
                   value={c}
@@ -93,6 +113,8 @@ export default function AddNewBudgetModal({
               <span className="text-beige-500 font-4-regular">$</span>
               <input
                 id="maximum"
+                autoFocus
+                autoComplete="off"
                 value={form.maximum}
                 onChange={(e) => setForm({ ...form, maximum: e.target.value })}
                 className="outline-none"

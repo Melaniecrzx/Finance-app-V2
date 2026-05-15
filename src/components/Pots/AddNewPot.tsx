@@ -70,6 +70,8 @@ export default function AddNewPot({
             <div className="border border-beige-500 rounded-lg py-3 px-5">
               <input
                 id="potName"
+                autoFocus
+                autoComplete="off"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
@@ -88,6 +90,7 @@ export default function AddNewPot({
             <div className="border border-beige-500 rounded-lg py-3 px-5">
               <span className="text-beige-500 font-4-regular">$</span>
               <input
+                autoComplete="off"
                 id="target"
                 type="number"
                 value={form.target}

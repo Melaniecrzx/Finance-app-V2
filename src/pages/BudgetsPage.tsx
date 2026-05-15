@@ -6,6 +6,8 @@ import AddNewBudgetModal from '../components/Budgets/AddNewBudgetModal.tsx';
 import type { BudgetWithStats } from '../types';
 import { useBudgets } from '../hooks/useBudgets.ts';
 import { calculateBudgetStats } from '../utils/budgetUtils.ts';
+import { ClipLoader } from 'react-spinners';
+import EmptyState from '../components/ui/EmptyState.tsx';
 
 export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
@@ -17,7 +19,12 @@ export default function BudgetsPage() {
     ...calculateBudgetStats(b),
   }));
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <ClipLoader color="#277c78" size={35} />
+      </div>
+    );
 
   return (
     <main className="py-8 px-4 mb-10 md:px-10 flex flex-col gap-8 w-full">
@@ -27,18 +34,30 @@ export default function BudgetsPage() {
           + Add New Budget
         </Button>
       </div>
-      <div className="flex flex-col gap-8 md:gap-6 lg:flex-row ">
-        <BudgetSummary budgets={budgetsWithStats} />
-        <div className="flex flex-col gap-6 flex-1 min-w-0">
-          {budgets.map((m) => (
-            <BudgetCard
-              key={m._id}
-              budget={m}
-              stats={calculateBudgetStats(m)}
-            />
-          ))}
+      {budgets.length > 0 ? (
+        <div className="flex flex-col gap-8 md:gap-6 lg:flex-row ">
+          <BudgetSummary budgets={budgetsWithStats} />
+          <div className="flex flex-col gap-6 flex-1 min-w-0">
+            {budgets.map((m) => (
+              <BudgetCard
+                key={m._id}
+                budget={m}
+                stats={calculateBudgetStats(m)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center h-screen items-center flex-1">
+          <EmptyState
+            emoji="💰"
+            title="No budgets created"
+            description="It looks like you don't have any budgets setup. Create a budget to keep your spending on track."
+            buttonLabel="+ Add New Budget"
+            onClick={() => setAddNewBudgetOpen(true)}
+          />
+        </div>
+      )}
 
       <AddNewBudgetModal
         addNewBudgetOpen={addNewBudgetOpen}

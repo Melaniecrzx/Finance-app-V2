@@ -1,6 +1,7 @@
 import { useContext, createContext, useState } from 'react';
 import type { User } from '../types/index';
 import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthContextType {
   user: User | null;
@@ -22,12 +23,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(user);
     toast.success('Welcome back!');
   };
+  const queryClient = useQueryClient();
 
   const logout = () => {
     localStorage.removeItem('finance-app-token');
     setToken(null);
     setUser(null);
     toast.success('Logged out successfully');
+    queryClient.clear();
   };
 
   return (

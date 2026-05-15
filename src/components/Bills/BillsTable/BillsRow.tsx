@@ -21,7 +21,10 @@ export default function BillsRow({ recurringBill }: BillsRowProps) {
     <tr className="border-b border-grey-100">
       <td className="text-grey-900 font4-bold text-left py-3 flex items-center gap-4">
         <img
-          src={recurringBill.avatar}
+          src={recurringBill.avatar.replace(
+            './assets/images/avatars',
+            '/avatars',
+          )}
           className="h-10 w-10 rounded-full shrink-0"
           alt="avatar transaction"
         />
