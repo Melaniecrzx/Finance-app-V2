@@ -1,7 +1,6 @@
-# Finance App V2
+# Finance App — Fullstack
 
-A personal finance management app built as a refactor of my original Finance App,
-using a production-ready front-end stack. Inspired by the
+A personal finance management app built fullstack, inspired by the
 [Personal Finance App challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/personal-finance-app-JfjtZgyMt1).
 
 ## Table of contents
@@ -11,16 +10,14 @@ using a production-ready front-end stack. Inspired by the
 - [Tech Stack](#-tech-stack)
 - [Features](#-features)
 - [Architecture](#-architecture)
-- [Tests](#-test)
+- [Demo Account](#-demo-account)
 - [Links](#-links)
 - [What I Learned](#-what-i-learned)
 - [Author](#-author)
 
 ## Overview
 
-This project is a refactor of my original Finance App, rebuilt with TypeScript, Redux Toolkit,
-Jotai and Framer Motion.
-The goal was to apply professional front-end practices on a real project with meaningful business logic.
+A fullstack personal finance dashboard with authentication, real data persistence and a production-ready deployment. Users can manage budgets, saving pots, transactions and recurring bills — all scoped to their own account.
 
 ## 🎬 Demo & Screenshots
 
@@ -39,67 +36,86 @@ The goal was to apply professional front-end practices on a real project with me
 
 <p>
   <img src="src/assets/demo/FinanceApp-responsive.png" width="32%">
-    <img src="src/assets/demo/FinanceApp-responsive2.png" width="32%">
-
+  <img src="src/assets/demo/FinanceApp-responsive2.png" width="32%">
 </p>
 
 ## 🛠️ Tech Stack
 
+### Frontend
+
 - **Language:** TypeScript
-- **Frontend:** React 19 + Tailwind CSS v4
-- **State Management:** Redux Toolkit + Jotai
+- **Framework:** React 19 + Tailwind CSS v4
+- **Data Fetching:** React Query (TanStack Query v5)
+- **HTTP Client:** Axios with JWT interceptor
+- **UI State:** Jotai
 - **Animations:** Framer Motion
+- **Forms:** React Hook Form
 - **Routing:** React Router v6
 - **Build Tool:** Vite
 - **Deploy:** Vercel
-- **Testing:** Vitest
+
+### Backend
+
+- **Runtime:** Node.js + Express
+- **Database:** MongoDB + Mongoose
+- **Auth:** JWT + bcrypt
+- **Security:** Helmet, express-rate-limit, express-mongo-sanitize, xss-clean, CORS
+- **Deploy:** Railway
 
 ## ✨ Features
 
-- 📊 **Overview Dashboard** - Balance, income, expenses at a glance
-- 💰 **Budget Management** - Create, edit, delete budgets with spending tracking
-- 🪙 **Pots** - Savings goals with add/withdraw functionality
-- 💳 **Transactions** - Search, filter, sort and paginate transactions
-- 🧾 **Recurring Bills** - Paid, upcoming and due soon status
-- 🗂️ **Animated Sidebar** - Collapsible with Framer Motion
-- 📱 **Fully Responsive** - Mobile navbar + desktop sidebar
+- 🔐 **Authentication** — Register, Login, JWT protected routes
+- 👤 **Multi-user** — each user sees only their own data
+- 📊 **Overview Dashboard** — balance, income, expenses and recent transactions
+- 💰 **Budget Management** — create, edit, delete budgets with spending tracking
+- 🪙 **Saving Pots** — savings goals with deposit and withdraw functionality
+- 💳 **Transactions** — search, filter by category, sort and paginate
+- 🧾 **Recurring Bills** — paid, due soon and upcoming status
+- 🗂️ **Animated Sidebar** — collapsible with Framer Motion
+- 📱 **Fully Responsive** — mobile navbar + desktop sidebar
+- 🔔 **Toast Notifications** — success and error feedback on every action
 
 ## 🏗️ Architecture
 
-- **Redux Toolkit** — global state for budgets and pots (CRUD operations)
+### Frontend
+
+- **React Query** — all server state (transactions, budgets, pots, bills, overview)
 - **Jotai** — lightweight UI state for sidebar open/close
-- **TypeScript** — strict typing across all components, slices and utilities
-- **Feature-based folder structure** — `features/budget`, `features/pot`, `utils/`, `atoms/`
-- **Git flow** — one branch per feature, clean commit history
+- **Axios interceptor** — automatically attaches JWT token to every request
+- **ProtectedRoute** — redirects unauthenticated users to login
+- **Feature-based folder structure** — `hooks/`, `pages/`, `components/`, `context/`
 
-## 🧪 Tests
+### Backend
 
-Unit tests written with **Vitest** on the core business logic :
+- **REST API** — clean routes per resource (`/auth`, `/transactions`, `/budgets`, `/pots`, `/bills`, `/overview`)
+- **JWT middleware** — `protect` runs before every private route
+- **User scoping** — every query filters by `req.user._id`
+- **Global error handler** — catches all errors including CastError, ValidationError, JWT errors
+- **APIFeatures** — reusable class for filtering, sorting and pagination
+- **MongoDB aggregations** — overview stats computed server-side with `$match`, `$group`, `$cond`
 
-- Redux slices — `budgetSlice`, `potSlice`
-- Utility functions — `calculateBudgetStats`, `paidBills`, `upcomingBills`, `dueSoonBills`
+## 🔑 Demo Account
+
+Email: demo@finance.com
+Password: Demo1234!
 
 ## 🔗 Links
 
 - 🌐 **Live Demo:** [View Application](https://finance-app-melaniecrzx.vercel.app/)
-- 💻 **Source Code:** [GitHub Repository](https://github.com/Melaniecrzx/Finance-app-V2.git)
-- 🎯 **V1 Frontend:** [Finance App V1 Frontend](https://github.com/Melaniecrzx/Finance-App-client.git)
-- 🎯 **V1 Backend:** [Finance App V1 Backeend](https://github.com/Melaniecrzx/Finance-App.git)
+- 💻 **Frontend Repo:** [GitHub](https://github.com/Melaniecrzx/Finance-app-V2.git)
+- ⚙️ **Backend Repo:** [GitHub](https://github.com/Melaniecrzx/Finance-App.git)
 
 ## 💡 What I Learned
 
-- Typing a full React app with TypeScript — interfaces, union types, generics
-- State management architecture — when to use Redux vs Jotai vs useState
-- Redux Toolkit — slices, reducers, PayloadAction, useAppSelector/useAppDispatch
-- Framer Motion — AnimatePresence, layout animations, transition between pages
-- Feature-based project structure for scalability
-
-## 🚧 Next Steps
-
-- Migrate styling from Tailwind to Styled Components
-- Connect to a real backend (Node.js + MongoDB)
+- Building a fullstack REST API with Express and MongoDB
+- JWT authentication — signup, login, protect middleware, token interceptor
+- React Query — useQuery, useMutation, invalidateQueries, cache invalidation on success
+- MongoDB aggregations — `$match`, `$group`, `$cond` for server-side stats
+- User-scoped data — filtering every query by `req.user._id`
+- Security best practices — Helmet, rate limiting, NoSQL sanitization, XSS protection
+- Deploying a fullstack app — Railway for the backend, Vercel for the frontend
 
 ## 👤 Author
 
-- GitHub - [@Melaniecrzx](https://github.com/Melaniecrzx)
-- Portfolio - [https://portfolio-melaniecrzx.vercel.app](https://portfolio-melaniecrzx.vercel.app)
+- GitHub — [@Melaniecrzx](https://github.com/Melaniecrzx)
+- Portfolio — [https://portfolio-melaniecrzx.vercel.app](https://portfolio-melaniecrzx.vercel.app)
