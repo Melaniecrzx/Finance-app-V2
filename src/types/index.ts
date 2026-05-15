@@ -76,7 +76,7 @@ export interface BudgetStats {
   spentBudget: number;
   spentBudgetPercentage: number;
   remainingBudget: number;
-  latestSpending: Transaction[];
+  latestSpending?: Transaction[];
 }
 
 export interface Budget {

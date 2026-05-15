@@ -8,15 +8,26 @@ import { useBudgets } from '../hooks/useBudgets.ts';
 import { calculateBudgetStats } from '../utils/budgetUtils.ts';
 import { ClipLoader } from 'react-spinners';
 import EmptyState from '../components/ui/EmptyState.tsx';
+import { useTransactions } from '../hooks/useTransactions';
 
 export default function BudgetsPage() {
   const [addNewBudgetOpen, setAddNewBudgetOpen] = useState(false);
 
   const { data: budgets = [], isLoading } = useBudgets();
+  const { data: transactionsData } = useTransactions({
+    page: 1,
+    sort: 'latest',
+    category: 'all',
+    search: '',
+  });
+  const transactions = transactionsData?.data?.transactions ?? [];
 
   const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
     ...b,
-    ...calculateBudgetStats(b),
+    ...calculateBudgetStats(b, transactions),
+    latestSpending: transactions
+      .filter((t) => t.category === b.category)
+      .slice(0, 3),
   }));
 
   if (isLoading)
@@ -42,7 +53,7 @@ export default function BudgetsPage() {
               <BudgetCard
                 key={m._id}
                 budget={m}
-                stats={calculateBudgetStats(m)}
+                stats={calculateBudgetStats(m, transactions)}
               />
             ))}
           </div>

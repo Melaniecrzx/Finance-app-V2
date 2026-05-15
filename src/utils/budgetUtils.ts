@@ -5,8 +5,8 @@ export const calculateBudgetStats = (
   transactions: Transaction[],
 ) => {
   const spent = transactions
-    .filter((t) => t.category === budget.category && t.amount < 0)
-    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
+    .filter((t: Transaction) => t.category === budget.category && t.amount < 0)
+    .reduce((acc: number, t: Transaction) => acc + Math.abs(t.amount), 0);
 
   const spentBudget = Math.min(spent, budget.maximum);
   const spentBudgetPercentage = (spentBudget / budget.maximum) * 100;
