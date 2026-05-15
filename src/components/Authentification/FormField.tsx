@@ -8,7 +8,7 @@ export default function FormField({
 }: {
   label: string;
   id: string;
-  error: FieldError;
+  error: FieldError | undefined;
   children: React.ReactNode;
 }) {
   return (
