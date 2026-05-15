@@ -2,16 +2,27 @@ import { Link } from 'react-router-dom';
 import IconChevronRight from '../Icon/IconChevronRight';
 import { Pie, PieChart, Cell, Tooltip } from 'recharts';
 import { calculateBudgetStats } from '../../utils/budgetUtils';
-import type { BudgetWithStats } from '../../types';
 import { useBudgets } from '../../hooks/useBudgets';
 import EmptyState from '../ui/EmptyState';
+import { useTransactions } from '../../hooks/useTransactions';
+import type { Transaction } from '../../types';
 
 export default function BudgetsOverview() {
   const { data: budgets = [] } = useBudgets();
+  const { data: transactionsData } = useTransactions({
+    page: 1,
+    sort: 'latest',
+    category: 'all',
+    search: '',
+  });
+  const transactions = transactionsData?.data?.transactions ?? [];
 
-  const budgetsWithStats: BudgetWithStats[] = budgets.map((b) => ({
+  const budgetsWithStats = budgets.map((b) => ({
     ...b,
-    ...calculateBudgetStats(b),
+    ...calculateBudgetStats(b, transactions),
+    latestSpending: transactions
+      .filter((t: Transaction) => t.category === b.category)
+      .slice(0, 3),
   }));
 
   const spentBudgetTotal = budgetsWithStats.reduce(
@@ -24,19 +35,19 @@ export default function BudgetsOverview() {
   );
 
   return (
-    <section className="bg-white rounded-xl px-5 py-6 md:p-8 flex flex-col gap-5 ">
+    <section className="bg-white rounded-xl px-5 py-6 md:p-8 flex flex-col gap-5">
       <div className="flex justify-between items-center">
         <h2 className="font2 text-grey-900">Budgets</h2>
         <Link
           to="/budgets"
-          className="cursor-pointer font4-regular text-grey-500 flex gap-3 items-center "
+          className="cursor-pointer font4-regular text-grey-500 flex gap-3 items-center"
         >
           See Details
           <IconChevronRight className="w-3 h-3" />
         </Link>
-      </div>{' '}
+      </div>
       {budgets.length > 0 ? (
-        <div className=" flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-50 lg:gap-4">
           <div className="relative flex items-center justify-center">
             <PieChart width={240} height={240}>
               <Pie
@@ -76,14 +87,13 @@ export default function BudgetsOverview() {
               </span>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-1  gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
             {budgets.map((b) => (
               <div key={b._id} className="flex gap-4">
                 <div
-                  className="rounded-lg h-10.75 w-2 items-center"
+                  className="rounded-lg h-10.75 w-2"
                   style={{ backgroundColor: b.theme }}
-                ></div>
+                />
                 <div className="flex flex-col gap-2">
                   <span className="text-grey-500 font5-regular">
                     {b.category}
@@ -97,13 +107,11 @@ export default function BudgetsOverview() {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center h-screen items-center flex-1">
-          <EmptyState
-            emoji="💰"
-            title="No budgets created"
-            description="It looks like you don't have any budgets setup. Create a budget to keep your spending on track."
-          />
-        </div>
+        <EmptyState
+          emoji="💰"
+          title="No budgets created"
+          description="Create a budget to keep your spending on track."
+        />
       )}
     </section>
   );

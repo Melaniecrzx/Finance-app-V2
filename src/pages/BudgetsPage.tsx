@@ -3,7 +3,7 @@ import BudgetCard from '../components/Budgets/BudgetCard.tsx';
 import Button from '../components/ui/Button.tsx';
 import { useState } from 'react';
 import AddNewBudgetModal from '../components/Budgets/AddNewBudgetModal.tsx';
-import type { BudgetWithStats } from '../types';
+import type { BudgetWithStats, Transaction } from '../types';
 import { useBudgets } from '../hooks/useBudgets.ts';
 import { calculateBudgetStats } from '../utils/budgetUtils.ts';
 import { ClipLoader } from 'react-spinners';
@@ -26,7 +26,7 @@ export default function BudgetsPage() {
     ...b,
     ...calculateBudgetStats(b, transactions),
     latestSpending: transactions
-      .filter((t) => t.category === b.category)
+      .filter((t: Transaction) => t.category === b.category)
       .slice(0, 3),
   }));
 
